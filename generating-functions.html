@@ -257,57 +257,6 @@ show that $p_N$ is in the form $p_N = p + o(N)$ for some $p\in[0,1]$ and some $o
 \]</span> Hence, <span class="math display">\[
 p_n = 1 - \frac 1 2 + \cdots + (-1)^n \frac 1 {2^n} = \frac 2 3(1 - (-1)^{n+1}\frac 1 {2^{n+1}})  = \frac 2 3 + \frac {(-1)^n }{2^{n} 3}.
 \]</span></p>
-<!-- title: "Finding the probability of a random number sequence to contain a given number" -->
-<!--
-The sequence tracks the rabbit population in terms of the age of the first pair of rabbits measured in months. When the pair reaches one month it is able to reproduce. Assuming the female gets pregnant immediately after that, it takes her precisely one month to produce another pair of rabbits -- again one male and one female. Thus at the beginning of the second month there would be 2 pairs of rabbits. At the beginning of the $n$-th month the rabbit population $F_n$ will be the sum of the population one month before, $F_{n-1}$, plus the newborn pair of rabbits -- their number will be equal to the number of rabbit pairs that were born two or more months ago -- which is equal to $F_{n-2}$.
--->
-<!--
-We shall consider two methods for solving the above recurrence relation.
-
-Any linear homogeneous recurrence relation with constant coefficients may be solved by finding the roots of its *characteristic equation*, which in this case is given by
-$$
-   m x^{n_m} = x^{a_{m-1}} + \cdots + x^{a_1} + 1.
-$$
-Finding the roots of the above polynomial explicitly is possible only in special cases.
--->
-<!--
-### General Asymptotics
-### Method 2
-
-We are now going to consider a more powerful method for solving the above recurrence relation. Given a number sequence $p_0, p_1, p_2$, $\dots$, the function $g(x) = p_0 + p_1 x + p_2 x^2 + \cdots$ is called the *generating function* of the number sequence. Multiplying  the recurrence relation by $t^{n+n_m}$ and summing for all $n$, $n=0,1,2,\dots$, we get the relation
-$$
-   m (g(x) - g_{n_m}(x)) = x^{n_1}(g(x)- g_{a_{m-1}}(x)) + \cdots + x^{n_{m-1}}(g(x)- g_{a_{1}}(x)) + x^{n_m}g(x),
-$$
-where by $g_n(x)$ we have denoted the sum of the first $n$ terms of $g(x)$, that is, $g_n(x) = p_0 + p_1x+\cdots+p_{n-1}x^{n-1}$, for $n\geq1$. Hence,
-$$
-   g(x) = \frac {h(x)} {m -  (x^{n_{1}} + x^{n_{2}} \cdots + x^{n_m})},
-$$
-where
-$$
-h(x) = mg_{n_m}(x) - (x^{n_{1}} g_{a_{m-1}}(x) + \cdots + x^{n_{m-1}} g_{a_{1}}(x))
-$$
-is a polynomial. It is not hard in fact to notice that $h(x)=m$. This follows from the fact that the coefficients of
-$$
-  \frac {x^{n_{1}} g_{a_{m-1}}(x) + \cdots + x^{n_{m-1}} g_{a_{1}}(x)} m
-$$
-are precisely the probabilities $p_n$ for $0<n<n_m$. Thus, we obtain that $g(x) = \frac 1 {1-s(x)}$, where $s(x)=(x^{n_{1}} + x^{n_{2}} \cdots + x^{n_m}) / m$ is the generating function of the random variable $X$. If we expand $g(x)$ in Taylor series around zero, we would obtain explicit expression for the coefficients $p_n$ and their asymptotic development as $n\rightarrow\infty$.
-
-
-Notice that $g(x)$ has a unique pole at $x=1$. If we can show that
-$$
-   g(x) = \frac {C} {1 - x} + f(x),
-$$
-where $C$ is a suitable constant and $f(x)$ is analytic around $x=1$, then it would follow that $p_n\rightarrow C$ as $n\rightarrow\infty$. Expanding $1=s(x)$ in a Taylor series around $x=1$, we obtain
-$$
-  1 - s(x) = -\mu(x-1) - \mu (x-1)^2 r(x),
-$$
-where $\mu = (n_1+n_2+\cdots+n_m)/m = \operatorname E X$ and $r(x)$ is some analytic function around $x=1$. It follows that
-$$
-   g(x) = \frac 1 {\mu} \frac 1 {1 - x}\frac 1 {1-(1-x)r(x)} = \frac 1 {\mu} \frac 1 {1 - x}\left(1+(1-x)r(x) + (1-x)^2r^2(x)+\cdots\right).
-$$
-Thus, $g(x)$ has the desired form with $C=1/\mu$ and $f(x) = (r(x) + (1-x)r^2(x) + \cdots)/\mu$. This concludes the proof of the limit
-$p_n\rightarrow m/(n_1+n_2+\cdots+n_m)$ as $n\rightarrow\infty$.
--->
 </div>
 
 
