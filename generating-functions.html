@@ -8,28 +8,18 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-<!--
+
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
   TeX: {
       equationNumbers: {
-            autoNumber: "all",
-            formatNumber: function (n) {return '9.'+n}
-      }
-  }
-});
-</script>
--->
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  TeX: {
-      equationNumbers: {
-            autoNumber: "AMS",
+            autoNumber: "AMS", <!--"all" -->
             formatNumber: function (n) {return n}
       }
   }
 });
 </script>
+
 
 *A generating function is a device somewhat similar to a bag. Instead of carrying many little objects detachedly, which could be embarrassing, we put them all in a bag, and then we have only one object to carry, the bag. -- George Polya, Mathematics and plausible reasoning (1954)*
 
@@ -153,14 +143,15 @@ S_{n+1} = S_n + X, \quad S_0 = 0, \quad n = 0,1, \dots,
 \end{equation}
 $$
 where $X$ is a random variable taking any value from a given set of natural numbers $\mathcal X = \{n_1, n_2, ..., n_m\}$ with equal probability. If $p_N$ is the probability that the sequence $S_n$ will contain a given number $N$, determine $p_N$ explicitly or asymptotically.
+<!--
+show that $p_N$ is in the form $p_N = p + o(N)$ for some $p\in[0,1]$ and some $o(N)$ as $N\rightarrow\infty$, and find $p$.
+-->
 
 ### Solution
 
 First, without loss of generality we may assume that the numbers $n_1$, $\dots$, $n_m$ are relative prime. Indeed, if $d \geq 1$ is their greatest common divisor then $S_n$ will traverse only the numbers $\{d, 2d, 3d, \dots\}$ as $S_n$ and $X$ will be divisible by $d$. Then we may write $X=dX'$, where $X'$ is a new random variable taking values in the set $\mathcal X' = \{n_1/d, n_2/d, ..., n_m/d\}$. Then writing $S_n=dS_n'$, it is clearly enough to consider the problem only for the sequence $S_n'$.
 
-Suppose that the elements of the set $\mathcal X$ are given in ascending order: $n_1 \leq n_2 \leq \cdots \leq n_m$.
-
-If $p_n$ is the probability the sequence $S_n$ to contain $n$ for any $n\geq0$, then we have the recurrence relation
+Suppose that the elements of the set $\mathcal X$ are given in ascending order: $n_1 \leq n_2 \leq \cdots \leq n_m$. If $p_n$ is the probability the sequence $S_n$ to contain $n$ for any $n\geq0$, then we have the recurrence relation
 $$
 \begin{equation}\label{eq: p_n}
    p_{n} = \frac {p_{n-n_1} + p_{n-n_2}  + \cdots + p_{n-n_m}} m,
@@ -192,17 +183,6 @@ Thus, $g(x)$ has the desired form with $C=1/\mu$ and $f(x) = (r(x) + (1-x)r^2(x)
 $$
    p_n = \frac 1 {\operatorname E X} + o(n)\quad \text{as} \quad n\rightarrow\infty.
 $$
-
-
-<!--
-We shall consider two methods for solving the above recurrence relation.
-
-Any linear homogeneous recurrence relation with constant coefficients may be solved by finding the roots of its *characteristic equation*, which in this case is given by
-$$
-   m x^{n_m} = x^{a_{m-1}} + \cdots + x^{a_1} + 1.
-$$
-Finding the roots of the above polynomial explicitly is possible only in special cases.
--->
 
 ### Example 1
 
