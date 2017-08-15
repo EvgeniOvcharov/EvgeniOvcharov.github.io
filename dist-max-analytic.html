@@ -153,8 +153,8 @@ MathJax.Hub.Config({
 Figure 1. Reflection Principle
 </p>
 </div>
-<div id="some-facts-about-paths" class="section level4">
-<h4>Some facts about paths</h4>
+<div id="counting-paths" class="section level4">
+<h4>Counting paths</h4>
 <p>The number of paths starting at <span class="math inline">\((0,a)\)</span> and ending at <span class="math inline">\((n, b)\)</span> is <span class="math display">\[
    \binom n {(n-(b-a))/2},
 \]</span> provided that <span class="math inline">\(n-(b-a)\)</span> is even, or zero otherwise. Indeed, notice that such paths exist if we can solve the equation <span class="math inline">\(n=2x+(b-a)\)</span> for some nonnegative integer <span class="math inline">\(x\)</span>. Specifically, the solution <span class="math inline">\(x = (n-(b-a))/2\)</span> is an integer precisely when <span class="math inline">\(n-(b-a)\)</span> is even. To obtain all such paths we need to choose <span class="math inline">\(x\)</span> places where the path is going up out of <span class="math inline">\(n\)</span> places, thus giving the above result. For all remaining other places the direction of the path is fixed: down for the remaining <span class="math inline">\(x\)</span> steps, and up or down, depending whether <span class="math inline">\(b-a&gt;0\)</span> or <span class="math inline">\(b-a&lt;0\)</span>, respectively, for the remaining <span class="math inline">\(b-a\)</span> steps.</p>
@@ -165,7 +165,7 @@ Figure 1. Reflection Principle
    \binom {2n} n.
 \]</span> A path is <em>nonnegative/positive</em> if the second coordinate of all its subsequent nodes after the origin is nonnegative/positive. Notice that if a nonnegative path starting at <span class="math inline">\((0,0)\)</span> and ending at <span class="math inline">\((n,b)\)</span> has an odd length <span class="math inline">\(n\)</span>, then we must have that <span class="math inline">\(b\)</span> is odd, and hence <span class="math inline">\(b&gt;0\)</span>. This follows from the fact that the coordinate pairs <span class="math inline">\((i,j)\)</span> in a path have the property that the sum <span class="math inline">\(i+j\)</span> has the same oddity for all coordinate pairs. Hence a nonnegative path of odd length can be continued arbitrarily for one more step and it will still be a nonnegative path. Therefore, it is enough to find only the number of nonnegative paths of even length. (Those of odd length <span class="math inline">\(n\)</span> will be precisely one half of the nonnegative paths of even length <span class="math inline">\(n+1\)</span>.) The above result is obtained as follows. Using the reflection principle with axis <span class="math inline">\(y=-1\)</span>, we obtain that the number of nonnegative paths starting at (0,0) and ending at (2n, 0) is <span class="math display">\[
       \binom {2n} n - \binom {2n} {n-1}.
-\]</span> Similarly, all nonnegative paths starting at (0,0) and ending at (2n, 2k), for <span class="math inline">\(0&lt;k&lt;n\)</span>, is <span class="math display">\[
+\]</span> Similarly, the number of all nonnegative paths starting at (0,0) and ending at (2n, 2k), for <span class="math inline">\(0&lt;k&lt;n\)</span>, is <span class="math display">\[
     \binom {2n} {n-k} - \binom {2n} {n-k-1}.
 \]</span> Summing for all <span class="math inline">\(k=0,1,\dots,n-1\)</span>, we obtain a telescoping sum <span class="math display">\[
     \sum_{k=0}^{n-1} \left(\binom {2n} {n-k} - \binom {2n} {n-k-1}\right) = \binom {2n} n - 1
@@ -182,7 +182,7 @@ Figure 1. Reflection Principle
   A_k     = \{X_1\geq0, X_1+X_2\geq0, \dots, X_1+\cdots+X_k\geq0\},\\
   B_{n-k} = \{X_{k+1}\leq0, X_{k+1} + X_{k+2}\leq0, \dots, X_{k+1} + \cdots + X_{n}\leq0\},
 \]</span> for <span class="math inline">\(0&lt; k &lt; n\)</span>. The cases for which the maximum occurs at <span class="math inline">\(k=0\)</span> and <span class="math inline">\(k=n\)</span> correspond to the single events <span class="math inline">\(B_n\)</span> and <span class="math inline">\(A_n\)</span>, respectively. Notice that <span class="math inline">\(A_k\)</span> and <span class="math inline">\(B_{n-k}\)</span> are independent for <span class="math inline">\(0&lt; k &lt; n\)</span>. Thus we need to find the maximum among the probabilities <span class="math display">\[
-    P(B_n), P(A_1)P(B_{n-1}), \dots, P(A_{n-1})P(B_1), P(A_n),
+    P(B_n), P(A_1)P(B_{n-1}), \dots, P(A_{n-1})P(B_1), P(A_n).
 \]</span> Notice that due to symmetry we have <span class="math inline">\(P(A_i)=P(B_i)\)</span>, for <span class="math inline">\(i=1,\dots,n\)</span>. The solution will be finished if we show that <span class="math display">\[
 \begin{equation}
     P(A_n) &gt;  P(A_k) P(A_{n-k}), \label{eq: prob}
@@ -226,7 +226,7 @@ Figure 1. Reflection Principle
 </div>
 <div id="conclusion" class="section level3">
 <h3>Conclusion</h3>
-<p>The most elegant way of proving inequality <span class="math inline">\(\eqref{eq: prob}\)</span> is perhaps the third one as it only relies on intrinsic symmetries of the problem. The other two proofs, however, better investigated the connection between the maximum of a random walk and the mathematical theory of positive random walks. Thanks to the reflection principle we found out that the longer a random walk remains nonnegative, the higher the probability that it will remain nonnegative for the next few steps, and the lesser the probability that it will return to zero. This, perhaps, offers the most intuitive explanation of why the maximum of a random walk occurs with highest probability at the two endpoints of the walk.</p>
+<p>The most elegant way of proving inequality <span class="math inline">\(\eqref{eq: prob}\)</span> is perhaps the third one as it only relies on intrinsic symmetries of the problem. The other two proofs, however, better investigate the connection between the maximum of a random walk and the combinatorial theory of positive random walks. Thanks to the reflection principle we found out that the longer a random walk remains nonnegative, the higher the probability that it will remain nonnegative for the next few steps, and the lesser the probability that it will return to zero. This, perhaps, offers the most intuitive explanation of why the maximum of a random walk occurs with highest probability at the two endpoints of the walk. Furthermore, the second solution also indicates that the probability mass function of the distribution of maximum has the shape of a symmetric, convex curve.</p>
 </div>
 
 
