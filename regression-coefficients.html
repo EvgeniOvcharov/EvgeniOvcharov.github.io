@@ -11,7 +11,7 @@
 
 <meta name="author" content="Evgeni Ovcharov" />
 
-<meta name="date" content="2018-07-21" />
+<meta name="date" content="2018-08-15" />
 
 <title>Properties of the regression estimators</title>
 
@@ -127,63 +127,75 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">Properties of the regression estimators</h1>
 <h4 class="author"><em>Evgeni Ovcharov</em></h4>
-<h4 class="date"><em>July 21, 2018</em></h4>
+<h4 class="date"><em>August 15, 2018</em></h4>
 
 </div>
 
 
-<p>Here we consider the basic asymptotic properties of the estimators in a simple linear regression. To many they seem to rely on rather tedious and technical proofs. However, when approached from the right perspective, the proofs become rather intuitive and simple. In what follows, we illustrate this idea.</p>
+<!-- Written on July 21, 2018 !, corrected in August 14-->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { 
+      equationNumbers: { 
+            autoNumber: "AMS",
+            formatNumber: function (n) {return ''+n}
+      } 
+  }
+});
+</script>
+<p>Here we consider the basic asymptotic properties of the coefficient estimators in a simple linear regression. Many readers when first acquainted with the subject stay under the expression that this is a rather tedious and technical matter. In what follows, we would like to show that when approached from the right perspective, the subject becomes rather intuitive and clear.</p>
 <div id="derivation-of-the-estimators" class="section level2">
 <h2>Derivation of the estimators</h2>
 <p>We consider a simple linear regression model</p>
 <p><span class="math display">\[
   Y = \beta_0 + \beta_1 X + \epsilon,
 \]</span> where <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are random variables, <span class="math inline">\(\beta_0\)</span>, <span class="math inline">\(\beta_1\)</span> are constants and <span class="math inline">\(\epsilon\)</span> is the random error. We assume that the observations <span class="math inline">\((x_1,y_1), \dots, (x_n,y_n)\)</span> are independently and identically distributed. In the ordinary least squares (OLS) method, we want to minimize the mean squared error</p>
-<p><span class="math display">\[
+<span class="math display">\[\begin{equation}\label{objective}
    \min J(b_0, b_1) = \frac 1 n \sum_i (y_i - b_0 - b_1 x_i)^2
-\]</span> in terms of the unknown constants <span class="math inline">\(b_0\)</span>, <span class="math inline">\(b_1\)</span>. Solving</p>
+\end{equation}\]</span>
+<p>in terms of the unknown constants <span class="math inline">\(b_0\)</span>, <span class="math inline">\(b_1\)</span>. Solving</p>
 <p><span class="math display">\[
   \frac{\partial J(b_0, b_1)}{\partial b_0} = \frac 2 n \sum_i (y_i - b_0 - b_1 x_i) = 0
-\]</span> for <span class="math inline">\(b_0\)</span>, we obtain <span class="math inline">\(\hat \beta_0 = \bar y - b_1 \bar x\)</span>. This implies that the regression line always passes through the point <span class="math inline">\((\bar x, \bar y)\)</span>. Since the objective function <span class="math inline">\(J\)</span> is convex, its critical points are minima. That is why we may put the last expression of <span class="math inline">\(\hat \beta_0\)</span> in the expression for <span class="math inline">\(J(b_0, b_1)\)</span> and obtain a homogeneous relation <span class="math display">\[
-J(b_0, b_1) = J(b_1) = \frac 1 n \sum_i ((y_i - \bar y)  - b_1 (x_i-\bar x))^2
-\]</span> We may remember that centering the data leads to a regression model with zero free term.</p>
-<p>Solving for <span class="math inline">\(b_1\)</span> in <span class="math display">\[
+\]</span> for <span class="math inline">\(b_0\)</span>, we obtain <span class="math inline">\(\hat \beta_0 = \bar y - b_1 \bar x\)</span>. After finding the optimal value for <span class="math inline">\(b_1\)</span>, which we denote by <span class="math inline">\(\hat \beta_1\)</span>, we will get the relation <span class="math inline">\(\bar y = \hat \beta_0 + \hat \beta_1\bar x\)</span>. This means that the regression line always passes through the point <span class="math inline">\((\bar x, \bar y)\)</span>. Since the objective function <span class="math inline">\(J\)</span> is convex, its critical points are minima. That is why we may substitute <span class="math inline">\(\hat \beta_0 = \bar y - b_1 \bar x\)</span> in the expression for <span class="math inline">\(J(b_0, b_1)\)</span> in <span class="math inline">\((\ref{objective})\)</span> and eliminate <span class="math inline">\(b_0\)</span> <span class="math display">\[
+J(b_0, b_1) = J(b_1) = \frac 1 n \sum_i ((y_i - \bar y)  - b_1 (x_i-\bar x))^2.
+\]</span> Comparing the above with <span class="math inline">\(\eqref{objective}\)</span>, we notice that centering the data leads to a regression model with zero free term, that is, to a regression line through the origin. (Of course for the original, uncentered data <span class="math inline">\(\hat\beta_0\)</span> would typically not be zero.) Solving for <span class="math inline">\(b_1\)</span> in <span class="math display">\[
   \frac{\partial J(b_1)}{\partial b_1} = \frac 2 n \sum_i (x_i-\bar x)((y_i - \bar y)  - b_1 (x_i-\bar x)) = 0
 \]</span> we obtain that <span class="math display">\[
    \hat \beta_1 = \frac {c_{xy}}{d_x} = \frac{\frac 1 n \sum_i (x_i-\bar x)(y_i - \bar y)}{\frac 1 n \sum_i (x_i-\bar x)(x_i - \bar x)}.
-\]</span> The precise expression for <span class="math inline">\(\hat \beta_0\)</span> is then <span class="math inline">\(\hat \beta_0 = \bar y + \hat \beta_1\bar x\)</span>.</p>
+\]</span> Notice that <span class="math inline">\(\hat \beta_1\)</span> is the ratio of the sample covariance between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> and the sample variance of <span class="math inline">\(X\)</span>.</p>
 </div>
 <div id="properties-of-the-regression-estimators" class="section level2">
 <h2>Properties of the regression estimators</h2>
-<p>Here, we address the questions whether the estimators <span class="math inline">\(\hat \beta_0\)</span> and <span class="math inline">\(\hat \beta_1\)</span> are consistent and unbiased. <!--To quantify their accuracy, we are going to compute their variance as well.--></p>
-<p>We first treat the case of the <span class="math inline">\(\hat \beta_1\)</span> estimator. The trick is to write it in the form</p>
-<p><span class="math display">\[
+<p>Here, we address the questions whether the estimators <span class="math inline">\(\hat \beta_0\)</span> and <span class="math inline">\(\hat \beta_1\)</span> are unbiased and consistent. <!--To quantify their accuracy, we are going to compute their variance as well.--> We first treat the case of the <span class="math inline">\(\hat \beta_1\)</span> estimator. The trick is to write it in the form</p>
+<span class="math display">\[
    \hat \beta_1 = \beta_1 + \text{``an error term&quot;}.
-\]</span> In the expression of <span class="math inline">\(c_{xy}\)</span> we substitute <span class="math inline">\(y_i\)</span> with the model relation <span class="math inline">\(y_i - \bar y = \beta_1(x_i - \bar x) + \epsilon_i\)</span>. We arrive immediately at <span class="math display">\[
+\]</span> In the expression of <span class="math inline">\(c_{xy}\)</span> we substitute <span class="math inline">\(y_i\)</span> with the model relation <span class="math inline">\(y_i - \bar y = \beta_1(x_i - \bar x) + \epsilon_i\)</span>. We arrive immediately at
+<span class="math display">\[\begin{equation}\label{beta_1}
    \hat \beta_1 = \beta_1 + \frac{\sum_i (x_i-\bar x)(\epsilon_i - \bar \epsilon)}{\sum_i (x_i-\bar x)(x_i - \bar x)} = \beta_1 + \frac {c_{x\epsilon}}{d_x},
-\]</span> where <span class="math inline">\(c_{x\epsilon}\)</span> denotes the sample covariance between <span class="math inline">\((x_1,\dots, x_n)\)</span> and <span class="math inline">\((\epsilon_i,\dots,\epsilon)\)</span>. Notice that since <span class="math inline">\(\sum_i (x_i-\bar x)\bar \epsilon = 0\)</span> we may freely add or subtract this term to the above expression.</p>
-<p>The standard assumptions for the error terms <span class="math inline">\(\epsilon_i\)</span> are that they are independent and <span class="math inline">\(\operatorname E[\epsilon_i \mid X] = 0\)</span>. Notice that we are not going to use the much stronger assumption of independence between the error terms and the predictors. The assumptions imply that</p>
+\end{equation}\]</span>
+<p>where <span class="math inline">\(c_{x\epsilon}\)</span> denotes the sample covariance between <span class="math inline">\((x_1,\dots, x_n)\)</span> and <span class="math inline">\((\epsilon_1,\dots,\epsilon_n)\)</span>. Notice that since <span class="math inline">\(\sum_i (x_i-\bar x)\bar \epsilon = 0\)</span> we may freely add or subtract this term to the above expression.</p>
+<p>The standard assumptions for the error terms <span class="math inline">\(\epsilon_i\)</span> are that they are mutually independent and also <span class="math inline">\(\operatorname E[\epsilon_i] = 0\)</span>, which imposes no real restriction as the mean error may always be subsumed in the free term <span class="math inline">\(\beta_0\)</span>. In connection to the predictors, some models make the quite restrictive assumption of independence between the error terms and the predictors. Here we are going to assume the weaker condition <span class="math inline">\(\operatorname E[\epsilon_i \mid X] = 0\)</span> instead. As an immediate consequence of the latter we have that</p>
 <p><span class="math display">\[
-   \operatorname E[\epsilon_i] = \operatorname E [\operatorname E[\epsilon_i \mid X]] = 0.
+   \operatorname E[\epsilon_i] = \operatorname E [\operatorname E[\epsilon_i \mid X]] = 0
+\]</span> and also that <span class="math inline">\(X\)</span> and <span class="math inline">\(\epsilon\)</span> are uncorrelated. Indeed, <span class="math display">\[
+  \operatorname{cov}(X,\epsilon) = \operatorname E[X\epsilon] - \operatorname E[X]\operatorname E[\epsilon] = \operatorname E \operatorname E[X\epsilon \mid X]] - 0 = 0.
 \]</span></p>
 <p>We may write <span class="math inline">\(\hat \beta_1\)</span> in the form <span class="math display">\[
   \hat \beta_1 = \beta_1 + \sum_i \phi(x_1,\dots, x_n )\epsilon_i.
-\]</span> This implies that <span class="math display">\[
-   \operatorname E[\hat \beta_1] = \beta_1 + \operatorname E [\operatorname E[\epsilon_i \mid x_1,\dots, x_n]] = \beta_1, 
-\]</span> as <span class="math inline">\(\operatorname E[\epsilon_i \mid x_1,\dots, x_n] = 0\)</span>. For <span class="math inline">\(\hat \beta_0 = \bar y - \hat \beta_1 \bar x\)</span>, we have</p>
+\]</span> Using the fact that <span class="math inline">\(\operatorname E[\epsilon_i \mid x_1,\dots, x_n] = 0\)</span>, we find that <span class="math inline">\(\hat \beta_1\)</span> is unbiased <span class="math display">\[
+   \operatorname E[\hat \beta_1] = \beta_1 + \operatorname E [\phi(x_1,\dots, x_n )\operatorname E[\epsilon_i \mid x_1,\dots, x_n]] = \beta_1. 
+\]</span> For <span class="math inline">\(\hat \beta_0 = \bar y - \hat \beta_1 \bar x\)</span>, we have</p>
 <p><span class="math display">\[
-  \operatorname E[\hat \beta_1] = \operatorname E[\bar y] - \operatorname E [\operatorname E[\hat \beta_1 \bar x\mid x_1,\dots, x_n]] = \operatorname E[Y] - \beta_1 \operatorname E[X] = \beta_0. 
-\]</span> Thus <span class="math inline">\(\hat \beta_0\)</span> and <span class="math inline">\(\hat \beta_1\)</span> are unbiased estimators.</p>
-<p>By the law of large numbers <span class="math display">\[
-c_{x\epsilon} \rightarrow \operatorname E[X\epsilon] - \operatorname E[X]\operatorname E[\epsilon] = \operatorname E \operatorname E[X\epsilon \mid X]] - 0 = 0
-\]</span> and <span class="math inline">\(d_x \rightarrow \operatorname D[X]\)</span>. Hence <span class="math inline">\(\hat \beta_1 \rightarrow \beta_1\)</span> is a consistent estimator. Similarly, <span class="math display">\[
-  \hat \beta_0 = \bar y - \hat \beta_1 \bar x \rightarrow \operatorname E[Y] - \beta_1 \operatorname E[X] = \beta_0. 
-\]</span></p>
+  \operatorname E[\hat \beta_0] = \operatorname E[\bar y] - \operatorname E [\operatorname E[\hat \beta_1 \bar x\mid x_1,\dots, x_n]] = \operatorname E[Y] - \beta_1 \operatorname E[X] = \beta_0. 
+\]</span> Thus <span class="math inline">\(\hat \beta_0\)</span> is also an unbiased estimator.</p>
+<p>By the law of large numbers <span class="math inline">\(c_{x\epsilon} \rightarrow \operatorname{cov}(X,\epsilon)=0\)</span> and <span class="math inline">\(d_x \rightarrow \operatorname D[X]\)</span>, the variance of <span class="math inline">\(X\)</span>. In view of <span class="math inline">\(\eqref{beta_1}\)</span>, we conclude that <span class="math inline">\(\hat \beta_1 \rightarrow \beta_1\)</span> is a consistent estimator. Similarly, <span class="math display">\[
+  \hat \beta_0 = \bar y - \hat \beta_1 \bar x \rightarrow \operatorname E[Y] - \beta_1 \operatorname E[X] = \beta_0
+\]</span> is also a consistent estimator.</p>
 </div>
 <div id="convergence-of-sample-covariances" class="section level2">
 <h2>Convergence of sample covariances</h2>
 <p>Here, we are going to empirically verify the law of large numbers in the context of covariances for various assumptions.</p>
-<p>First, we sample two independent standard Gaussian random variables <span class="math inline">\(n\)</span> times.</p>
+<p>First, we sample two <em>independent</em> standard Gaussian random variables <span class="math inline">\(n\)</span> times.</p>
 <pre class="r"><code>m_xy = numeric(); c_xy = numeric(); d_x = numeric(); d_y = numeric();
 size = c(10, 100, 1000, 10000, 100000)
 for(n in size){
@@ -219,16 +231,16 @@ d_y
 10
 </td>
 <td style="text-align:right;">
--0.1449473
+0.6653836
 </td>
 <td style="text-align:right;">
-0.0317030
+0.5066586
 </td>
 <td style="text-align:right;">
-0.5941991
+1.2758320
 </td>
 <td style="text-align:right;">
-0.9858945
+1.847554
 </td>
 </tr>
 <tr>
@@ -236,16 +248,16 @@ d_y
 100
 </td>
 <td style="text-align:right;">
-0.0178133
+-0.1415029
 </td>
 <td style="text-align:right;">
-0.0188211
+-0.1434046
 </td>
 <td style="text-align:right;">
-1.0345378
+0.9382437
 </td>
 <td style="text-align:right;">
-1.0327879
+1.038935
 </td>
 </tr>
 <tr>
@@ -253,16 +265,16 @@ d_y
 1000
 </td>
 <td style="text-align:right;">
--0.0252155
+0.0082793
 </td>
 <td style="text-align:right;">
--0.0252434
+0.0073602
 </td>
 <td style="text-align:right;">
-1.0195022
+0.9221393
 </td>
 <td style="text-align:right;">
-0.9980061
+1.014271
 </td>
 </tr>
 <tr>
@@ -270,16 +282,16 @@ d_y
 10000
 </td>
 <td style="text-align:right;">
-0.0045546
+-0.0076619
 </td>
 <td style="text-align:right;">
-0.0045113
+-0.0076367
 </td>
 <td style="text-align:right;">
-1.0012987
+0.9771039
 </td>
 <td style="text-align:right;">
-0.9790991
+1.009348
 </td>
 </tr>
 <tr>
@@ -287,21 +299,21 @@ d_y
 1e+05
 </td>
 <td style="text-align:right;">
--0.0045008
+0.0046153
 </td>
 <td style="text-align:right;">
--0.0044992
+0.0046303
 </td>
 <td style="text-align:right;">
-1.0056106
+0.9998685
 </td>
 <td style="text-align:right;">
-0.9926225
+1.003136
 </td>
 </tr>
 </tbody>
 </table>
-<p>Now we consider a case where <span class="math inline">\(Y \sim N(0, X^2)\)</span>, <span class="math inline">\(X \sim U(0,1)\)</span>. It follows that <span class="math inline">\(\operatorname E[Y\mid X] =0\)</span>, and from the law of total expectation: <span class="math inline">\(\operatorname E[Y] = 0\)</span> and <span class="math inline">\(\operatorname E[XY] = 0\)</span>. Hence, <span class="math inline">\(\operatorname{cov}(X,Y)=0\)</span>, but <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are not independent. We shall verify whether the sample covariance between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> tends to zero.</p>
+<p>Now we consider a case where <span class="math inline">\(Y \sim N(0, X^2)\)</span>, <span class="math inline">\(X \sim U(0,1)\)</span>. It follows that <span class="math inline">\(\operatorname E[Y\mid X] =0\)</span>, and from the law of total expectation: <span class="math inline">\(\operatorname E[Y] = 0\)</span> and <span class="math inline">\(\operatorname E[XY] = 0\)</span>. Hence, <span class="math inline">\(\operatorname{cov}(X,Y)=0\)</span>, but <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are not independent (as the knowledge of <span class="math inline">\(X\)</span> alters the probability distribution of <span class="math inline">\(Y\)</span>). We shall verify whether the sample covariance between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> tends to zero.</p>
 <pre class="r"><code>m_xy = numeric(); c_xy = numeric(); d_x = numeric(); d_y = numeric();
 size = c(10, 100, 1000, 10000, 100000)
 for(n in size){
@@ -336,16 +348,16 @@ d_y
 10
 </td>
 <td style="text-align:right;">
--0.0574535
+-0.1179103
 </td>
 <td style="text-align:right;">
--0.0006993
+-0.0419951
 </td>
 <td style="text-align:right;">
-0.1107454
+0.0818501
 </td>
 <td style="text-align:right;">
-0.2702009
+0.3813869
 </td>
 </tr>
 <tr>
@@ -353,16 +365,16 @@ d_y
 100
 </td>
 <td style="text-align:right;">
--0.0283867
+0.0458464
 </td>
 <td style="text-align:right;">
--0.0160402
+0.0134985
 </td>
 <td style="text-align:right;">
-0.0746064
+0.0825960
 </td>
 <td style="text-align:right;">
-0.1766764
+0.1941960
 </td>
 </tr>
 <tr>
@@ -370,16 +382,16 @@ d_y
 1000
 </td>
 <td style="text-align:right;">
-0.0218560
+0.0198916
 </td>
 <td style="text-align:right;">
-0.0094915
+0.0074366
 </td>
 <td style="text-align:right;">
-0.0835726
+0.0802408
 </td>
 <td style="text-align:right;">
-0.2151778
+0.2128787
 </td>
 </tr>
 <tr>
@@ -387,16 +399,16 @@ d_y
 10000
 </td>
 <td style="text-align:right;">
--0.0039953
+0.0002954
 </td>
 <td style="text-align:right;">
--0.0015934
+-0.0000858
 </td>
 <td style="text-align:right;">
-0.0834791
+0.0811818
 </td>
 <td style="text-align:right;">
-0.2049722
+0.1961201
 </td>
 </tr>
 <tr>
@@ -404,16 +416,16 @@ d_y
 1e+05
 </td>
 <td style="text-align:right;">
-0.0000789
+-0.0017340
 </td>
 <td style="text-align:right;">
-0.0002761
+-0.0006666
 </td>
 <td style="text-align:right;">
-0.0834956
+0.0833437
 </td>
 <td style="text-align:right;">
-0.2002033
+0.2000258
 </td>
 </tr>
 </tbody>
