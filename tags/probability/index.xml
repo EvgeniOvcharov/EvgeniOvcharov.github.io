@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Probability on Blog on Data Science</title>
-    <link>/tags/probability/</link>
+    <link>https://evgeniovcharov.github.io/tags/probability/</link>
     <description>Recent content in Probability on Blog on Data Science</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 28 Aug 2018 00:00:00 +0000</lastBuildDate><atom:link href="/tags/probability/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 28 Aug 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://evgeniovcharov.github.io/tags/probability/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Independence and Cantor&#39;s Diagonal Argument</title>
-      <link>/post/2018-08-28-independence-and-diagonalization/</link>
+      <link>https://evgeniovcharov.github.io/post/2018-08-28-independence-and-diagonalization/</link>
       <pubDate>Tue, 28 Aug 2018 00:00:00 +0000</pubDate>
       
-      <guid>/post/2018-08-28-independence-and-diagonalization/</guid>
+      <guid>https://evgeniovcharov.github.io/post/2018-08-28-independence-and-diagonalization/</guid>
       <description>Let our probability space $(\Omega, \mathcal B, \lambda)$ be the unit interval $\Omega=[0,1]$ with the Borel subsets $\mathcal B$ and the Lebesgue measure $\lambda$. Is it possible to find an infinite sequence of independent and identically distributed random variables $X_1$, $X_2$, $\dots$ of any given distribution supported on this probability space?
 Surprisingly, yes, and the proof relies on a version of Cantor&amp;rsquo;s diagonal argument.
 Proof It is sufficient to find a sequence of independent and uniformly distributed random variables $U_1$, $U_2$, $\dots$, on $[0,1]$. Then if $F$ is any cumulative distribution function, the sequence $X_n = F^{-1}(U_n)$ has the desired property. Thus we proceed to construct the required sequence $U_1$, $U_2$, $\dots$
@@ -21,10 +21,10 @@ In order to apply Cantor&amp;rsquo;s diagonal argument, we first need to write a
     
     <item>
       <title>Complete Convergence and the Zero-One Laws</title>
-      <link>/post/2018-08-24-complete-convergence/</link>
+      <link>https://evgeniovcharov.github.io/post/2018-08-24-complete-convergence/</link>
       <pubDate>Mon, 27 Aug 2018 00:00:00 +0000</pubDate>
       
-      <guid>/post/2018-08-24-complete-convergence/</guid>
+      <guid>https://evgeniovcharov.github.io/post/2018-08-24-complete-convergence/</guid>
       <description>Here we illustrate three of the famous zero-one laws for convergent sequences of random variables. Their names are: the Borel-Cantelli lemma, the second Borel-Cantelli lemma, and Kolmogorov&amp;rsquo;s zero-one law. They are going to help us study the nuances in the relationship between almost sure convergence and complete convergence.
  Suppose we are given an infinite sequence of random variables
 $$ \tag{1}{X_1, X_2, \dots} $$
@@ -35,10 +35,10 @@ defined on some probability space $(\Omega, \mathcal A, \operatorname P)$. We li
     
     <item>
       <title>Are two random vectors independent if their components are pairwise independent?</title>
-      <link>/post/2018-07-20-vector-independence/</link>
+      <link>https://evgeniovcharov.github.io/post/2018-07-20-vector-independence/</link>
       <pubDate>Fri, 20 Jul 2018 23:52:33 +0300</pubDate>
       
-      <guid>/post/2018-07-20-vector-independence/</guid>
+      <guid>https://evgeniovcharov.github.io/post/2018-07-20-vector-independence/</guid>
       <description>Let $X=(X_1, X_2)$ and $Y=(Y_1, Y_2)$ be two random vectors in $\operatorname{R}^2$. Suppose that $X_i$ and $Y_j$ are independent for each pair of indices. We have the following questions.
  Are $X$ and $Y$ independent? Are $X$ and $Y$ independent if each of them is bivariately normally distributed? Are $X$ and $Y$ independent if they are jointly normally distributed?  Answer Let $X_1, X_2 \in U(0,1)$ be uniformly distributed and independent. Define the variables
 $$ \begin{aligned} Y_1 &amp;amp;= X_1 + X_2 \qquad \operatorname{mod} 1 \\ Y_2 &amp;amp;= X_1 - X_2 \qquad \operatorname{mod} 1, \end{aligned} $$
@@ -47,10 +47,10 @@ where the $\operatorname{mod} 1$ operation means that we identify all integer va
     
     <item>
       <title>Solving Recurrence Relations with Generating Functions</title>
-      <link>/post/2017-08-09-generating-functions/</link>
+      <link>https://evgeniovcharov.github.io/post/2017-08-09-generating-functions/</link>
       <pubDate>Wed, 09 Aug 2017 00:00:00 +0000</pubDate>
       
-      <guid>/post/2017-08-09-generating-functions/</guid>
+      <guid>https://evgeniovcharov.github.io/post/2017-08-09-generating-functions/</guid>
       <description>&amp;ldquo;A generating function is a device somewhat similar to a bag. Instead of carrying many little objects detachedly, which could be embarrassing, we put them all in a bag, and then we have only one object to carry, the bag.&amp;rdquo; &amp;ndash; George Polya, Mathematics and plausible reasoning (1954)
 Introduction Often in mathematics we have to deal with recurrence relations. One of the best known examples of recurrence relations is the Fibonacci numbers given by the relation
 $$ {\displaystyle F_{n}=F_{n-1}+F_{n-2}}, $$

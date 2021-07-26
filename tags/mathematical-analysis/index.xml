@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Mathematical Analysis on Blog on Data Science</title>
-    <link>/tags/mathematical-analysis/</link>
+    <link>https://evgeniovcharov.github.io/tags/mathematical-analysis/</link>
     <description>Recent content in Mathematical Analysis on Blog on Data Science</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 23 Aug 2018 00:00:00 +0000</lastBuildDate><atom:link href="/tags/mathematical-analysis/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 23 Aug 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://evgeniovcharov.github.io/tags/mathematical-analysis/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Computing an Integral</title>
-      <link>/post/2018-08-18-computing-integral/</link>
+      <link>https://evgeniovcharov.github.io/post/2018-08-18-computing-integral/</link>
       <pubDate>Thu, 23 Aug 2018 00:00:00 +0000</pubDate>
       
-      <guid>/post/2018-08-18-computing-integral/</guid>
+      <guid>https://evgeniovcharov.github.io/post/2018-08-18-computing-integral/</guid>
       <description>Problem Compute the integral
 $$ I = \int_0^\infty \frac 1 {1+x^4} dx. $$
 Answer  This seems to be a popular problem illustrating various mathematical techniques. The standard approach is to use complex analysis and the Cauchy method of residues. The problem may be solved with more elementary techniques by using a series of clever substitutions. Both approaches rely on quite lengthy computations to obtain the answer

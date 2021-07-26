@@ -2,17 +2,27 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Programming in R on Blog on Data Science</title>
-    <link>/tags/programming-in-r/</link>
+    <link>https://evgeniovcharov.github.io/tags/programming-in-r/</link>
     <description>Recent content in Programming in R on Blog on Data Science</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 24 Aug 2019 00:00:00 +0000</lastBuildDate><atom:link href="/tags/programming-in-r/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 26 Jul 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://evgeniovcharov.github.io/tags/programming-in-r/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Making requests to the Open Dota API in R</title>
+      <link>https://evgeniovcharov.github.io/post/2021-07-27-open_dota_api/</link>
+      <pubDate>Mon, 26 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://evgeniovcharov.github.io/post/2021-07-27-open_dota_api/</guid>
+      <description>In this tutorial, we are going to show how one can gather data about the esports game Dota 2 from a dedicated site collecting and providing such data. The data will be requested through the web site&amp;rsquo;s API interface documented here: The Open Dota API Documentation. First, we&amp;rsquo;re going to cover the basics of accessing an API using the R programming language.
+APIs allow programmers to request data directly from certain websites through what&amp;rsquo;s called an Application Programming Interface. When a website sets up an API, they are essentially setting up a computer that waits for data requests. Once this computer receives a data request, it will do its own processing of the data and send it to the computer that requested it.</description>
+    </item>
+    
     <item>
       <title>Reading multiple csv files in R</title>
-      <link>/post/2019-08-21-reading-csv-files/</link>
+      <link>https://evgeniovcharov.github.io/post/2019-08-21-reading-csv-files/</link>
       <pubDate>Sat, 24 Aug 2019 00:00:00 +0000</pubDate>
       
-      <guid>/post/2019-08-21-reading-csv-files/</guid>
+      <guid>https://evgeniovcharov.github.io/post/2019-08-21-reading-csv-files/</guid>
       <description>Comma-separated value (csv) files are one of the most common file formats used in data analysis today. Sometimes we need to read multiple csv files from disk and combine them into a single data frame or data table object in R. We shall explore five different approaches to that task and determine the most efficient one. First, let us make sure that we know how to answer the following question:
 How to list the files in a given directory? The function list.files() lists all files in a given directory whose names contain a specific character pattern. An example of its use can be the following:
 list.files(path = &amp;quot;./csv/&amp;quot;, pattern = &amp;quot;^f.*199&amp;quot;, full.names = TRUE)[1] &amp;quot;./csv/football-results-1998.csv&amp;quot; &amp;quot;./csv/football-results-1999.csv&amp;quot; The output is a character vector giving the names of the files matching the search criterion.</description>
