@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="HandheldFriendly" content="True" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="generator" content="Hugo 0.80.0" />
+
+
+<link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/dsrkafuu/dsr-cdn@1/images/favicons/dsrca/favicon.ico" />
+
+
+
+<title>Independence and Cantor&#39;s Diagonal Argument - Blog on Data Science</title>
+
+
+<meta name="author" content="Evgeni Ovcharov" />
+
+
+<meta name="description" content="A minimal Hugo theme with nice theme color." />
+
+
+<meta name="keywords" content="Probability" />
+
+
+<meta property="og:title" content="Independence and Cantor&#39;s Diagonal Argument" />
+<meta name="twitter:title" content="Independence and Cantor&#39;s Diagonal Argument" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/2018-08-28-independence-and-diagonalization/" /><meta property="og:description" content="Let our probability space $(\Omega, \mathcal B, \lambda)$ be the unit interval $\Omega=[0,1]$ with the Borel subsets $\mathcal B$ and the Lebesgue measure $\lambda$. Is it possible to find an infinite sequence of independent and identically distributed random variables $X_1$, $X_2$, $\dots$ of any given distribution supported on this probability space?
+Surprisingly, yes, and the proof relies on a version of Cantor&rsquo;s diagonal argument.
+Proof It is sufficient to find a sequence of independent and uniformly distributed random variables $U_1$, $U_2$, $\dots$, on $[0,1]$. Then if $F$ is any cumulative distribution function, the sequence $X_n = F^{-1}(U_n)$ has the desired property. Thus we proceed to construct the required sequence $U_1$, $U_2$, $\dots$
+In order to apply Cantor&rsquo;s diagonal argument, we first need to write an arbitrary point $a \in [0,1]$ as an infinite binary fraction" />
+<meta name="twitter:description" content="Let our probability space $(\Omega, \mathcal B, \lambda)$ be the unit interval $\Omega=[0,1]$ with the Borel subsets $\mathcal B$ and the Lebesgue measure $\lambda$. Is it possible to find an infinite sequence of independent and identically distributed random variables $X_1$, $X_2$, $\dots$ of any given distribution supported on this probability space?
+Surprisingly, yes, and the proof relies on a version of Cantor&rsquo;s diagonal argument.
+Proof It is sufficient to find a sequence of independent and uniformly distributed random variables $U_1$, $U_2$, $\dots$, on $[0,1]$. Then if $F$ is any cumulative distribution function, the sequence $X_n = F^{-1}(U_n)$ has the desired property. Thus we proceed to construct the required sequence $U_1$, $U_2$, $\dots$
+In order to apply Cantor&rsquo;s diagonal argument, we first need to write an arbitrary point $a \in [0,1]$ as an infinite binary fraction" /><meta property="og:image" content="/img/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="/img/og.png" /><meta property="article:published_time" content="2018-08-28T00:00:00+00:00" /><meta property="article:modified_time" content="2018-08-28T00:00:00+00:00" />
+
+
+<style>
+    @media (prefers-color-scheme: dark) {
+        body[data-theme='auto'] img {
+            filter: brightness(60%);
+        }
+    }
+
+    body[data-theme='dark'] img {
+        filter: brightness(60%);
+    }
+</style>
+
+
+
+<link rel="stylesheet" href="/assets/css/fuji.min.css" />
+
+
+
+
+
+</head>
+
+<body data-theme="auto">
+    <script data-cfasync="false">
+  
+  var fujiThemeData = localStorage.getItem('fuji_data-theme');
+  
+  if (!fujiThemeData) {
+    localStorage.setItem('fuji_data-theme', 'auto');
+  } else {
+    
+    if (fujiThemeData !== 'auto') {
+      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
+    }
+  }
+</script>
+    <header>
+    <div class="container-lg clearfix">
+        <div class="col-12 header">
+            <a class="title-main" href="/">Blog on Data Science</a>
+            
+            <span class="title-sub">Mathematics. Statistics. Algorithms.</span>
+            
+        </div>
+    </div>
+</header>
+
+    <main>
+        <div class="container-xl clearfix">
+            
+            <div class="col-12 col-md-9 float-left content">
+                
+<article>
+    
+    <h2 class="post-item post-title">
+        <a href="/post/2018-08-28-independence-and-diagonalization/">Independence and Cantor&#39;s Diagonal Argument</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2018-08-28</span><span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;477 words</span><span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/probability">Probability</a>&nbsp;</span>
+
+    </div>
+    
+    <div class="post-content markdown-body">
+        <p>Let our probability space $(\Omega, \mathcal B, \lambda)$ be the unit interval $\Omega=[0,1]$ with the Borel subsets $\mathcal B$ and the Lebesgue measure $\lambda$. Is it possible to find an infinite sequence of independent and identically distributed random variables $X_1$, $X_2$, $\dots$ of any given distribution supported on this probability space?</p>
+<p>Surprisingly, yes, and the proof relies on a version of Cantor&rsquo;s diagonal argument.</p>
+<h3 id="proof">Proof</h3>
+<p>It is sufficient to find a sequence of independent and uniformly distributed random variables $U_1$, $U_2$, $\dots$, on $[0,1]$. Then if $F$ is any cumulative distribution function, the sequence $X_n = F^{-1}(U_n)$ has the desired property. Thus we proceed to construct the required sequence $U_1$, $U_2$, $\dots$</p>
+<p>In order to apply Cantor&rsquo;s diagonal argument, we first need to write an arbitrary point $a \in [0,1]$ as an infinite binary fraction</p>
+<p>$$
+\begin{aligned}
+a = 0.\omega_1\omega_2\omega_3\dots, \quad \omega_i \in {0,1}.
+\end{aligned}
+$$</p>
+<p>Intuitively, we need to partition the information about $a$ into an infinite collection of portions and use each portion to construct a new random variable.</p>
+<p>We urge the reader to try finishing the proof on his or her own. Here is my approach.</p>
+<h3 id="applying-cantors-diagonal-argument">Applying Cantor’s diagonal argument</h3>
+<p>So let $\mathcal A_1$ be an infinite subsequence of $\mathcal A = \{ \omega_1, \omega_2, \omega_3, \dots \}$ such that the remaining subsequence of binary digits is also infinite. We select another infinite subsequence $\mathcal A_2$ of the remainder with the same condition. We may continue this process ad infinitum and obtain an infinite collection of subsequences $\mathcal A_i$. To each subsequence $\mathcal A_i$ we correspond a real number $a_i\in[0,1]$ with binary expansion given by the subsequence. We finish this construction by taking $U_i = a_i$.</p>
+<p>Let us now show that each $U_i$ is uniform. This follows from the fact that the value of $U_i$ is a binary fraction in $[0,1]$ whose digits have been drawn independently from the set $\{0,1\}$. Clearly, this process produces an arbitrary number on $[0,1]$. The variables $U_i$ are also independent because they do not contain any information about each other.</p>
+<h3 id="remark">Remark</h3>
+<p>Although aesthetically satisfying, Cantor&rsquo;s diagonal argument brought us to a conclusion which clashes deeply with our intuition. Indeed, it allowed us to effectively clone a single random variable into an infinite sequence of independent random variables. We are reminded once more that real numbers are collections of infinite information, which is something we tend to forget when we associate finite data with real numbers. And one infinite collection contains as much information as an infinity of infinite collections. The argument would have failed on probability spaces containing only rational points for example. Nevertheless, such arguments have their use in mathematics as sometimes they demonstrate a negative result - an impossibility of a certain property. In other cases like this one, they demonstrate a positive result, which cannot be observed directly, but only in terms of finite approximations.</p>
+
+    </div>
+</article>
+
+
+<div class="license markdown-body">
+    <blockquote>
+        <p>Unless otherwise noted, the content of this site is licensed under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"
+               target="_blank">CC BY-NC-SA 4.0</a>.</p>
+    </blockquote>
+</div>
+
+
+
+            </div>
+            <aside class="col-12 col-md-3 float-left sidebar">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/dsrkafuu" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+            <li>
+                <a href="https://twitter.com/dsrkafuu" target="_blank"><span>Twitter</span></a>
+            </li>
+            
+            <li>
+                <a href="https://space.bilibili.com/19767474" target="_blank"><span>bilibili</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/mathematical-analysis/">Mathematical Analysis</a>
+            </span>
+            
+            <span>
+                <a href="/tags/probability/">Probability</a>
+            </span>
+            
+            <span>
+                <a href="/tags/programming-in-r/">Programming in R</a>
+            </span>
+            
+            <span>
+                <a href="/tags/regression/">Regression</a>
+            </span>
+            
+        </div>
+    </div>
+    <div class="sidebar-item sidebar-toc">
+        <h3>TOC</h3><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#proof">Proof</a></li>
+        <li><a href="#applying-cantors-diagonal-argument">Applying Cantor’s diagonal argument</a></li>
+        <li><a href="#remark">Remark</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+</aside>
+        </div>
+        <div class="btn">
+    <div class="btn-menu" id="btn-menu">
+        <i class="iconfont icon-grid-sharp"></i>
+    </div>
+    <div class="btn-toggle-mode">
+        <i class="iconfont icon-contrast-sharp"></i>
+    </div>
+    <div class="btn-scroll-top">
+        <i class="iconfont icon-chevron-up-circle-sharp"></i>
+    </div>
+</div>
+<aside class="sidebar-mobile" style="display: none;">
+  <div class="sidebar-wrapper">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/dsrkafuu" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+            <li>
+                <a href="https://twitter.com/dsrkafuu" target="_blank"><span>Twitter</span></a>
+            </li>
+            
+            <li>
+                <a href="https://space.bilibili.com/19767474" target="_blank"><span>bilibili</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/mathematical-analysis/">Mathematical Analysis</a>
+            </span>
+            
+            <span>
+                <a href="/tags/probability/">Probability</a>
+            </span>
+            
+            <span>
+                <a href="/tags/programming-in-r/">Programming in R</a>
+            </span>
+            
+            <span>
+                <a href="/tags/regression/">Regression</a>
+            </span>
+            
+        </div>
+    </div>
+    
+    
+    
+    <div class="sidebar-item sidebar-toc">
+        <h3>TOC</h3>
+        <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#proof">Proof</a></li>
+        <li><a href="#applying-cantors-diagonal-argument">Applying Cantor’s diagonal argument</a></li>
+        <li><a href="#remark">Remark</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+    
+    
+  </div>
+</aside>
+    </main>
+
+    
+
+
+
+
+<script>
+window.MathJax = {
+    options: {
+        renderActions: {
+            addMenu: []
+        },
+        skipHtmlTags: ["script", "style", "textarea", "pre", "code"],   
+        includeHtmlTags: {br: '\n', wbr: '', '#comment': ''},   
+    },
+    loader: {
+        load: ['[tex]/tagFormat']
+    },
+    tex: {
+        inlineMath: [ ["$","$"] ],
+        displayMath: [ ["$$","$$"] ],
+        processEscapes: false,
+        packages: {'[+]': ['tagFormat']},
+        digits: /^(?:[\d۰-۹]+(?:[,٬'][\d۰-۹]{3})*(?:[\.\/٫][\d۰-۹]*)?|[\.\/٫][\d۰-۹]+)/,    
+        tagSide: "right",
+        tagIndent: ".8em",
+        multlineWidth: "85%",
+        
+        
+        tagFormat: {
+            number: function(n){
+                return String(n)
+                        .replace(/0/g,"۰")
+                        .replace(/1/g,"۱")
+                        .replace(/2/g,"۲")
+                        .replace(/3/g,"۳")
+                        .replace(/4/g,"۴")
+                        .replace(/5/g,"۵")
+                        .replace(/6/g,"۶")
+                        .replace(/7/g,"۷")
+                        .replace(/8/g,"۸")
+                        .replace(/9/g,"۹");
+            }
+        }
+    },
+    svg: {
+        fontCache: 'global',        
+        mtextInheritFont: true,     
+        scale: 0.97,                
+        minScale: 0.6               
+    }
+};
+</script>
+<script id="MathJax-script" async
+   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+
+    <footer>
+    <div class="container-lg clearfix">
+        <div class="col-12 footer">
+            
+            <span>&copy; 2020-2021
+                <a href="/">Evgeni Ovcharov</a>
+                 | <a href="https://github.com/itsme/my_blog">Source code</a> 
+                | Powered by <a href="https://github.com/dsrkafuu/hugo-theme-fuji/"
+                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
+                                                    target="_blank">Hugo</a> 
+            </span>
+        </div>
+    </div>
+</footer>
+
+    
+<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.0/lazysizes.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+
+
+<script defer src="/assets/js/fuji.min.js"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="HandheldFriendly" content="True" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="generator" content="Hugo 0.80.0" />
+
+
+<link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/dsrkafuu/dsr-cdn@1/images/favicons/dsrca/favicon.ico" />
+
+
+
+<title>Complete Convergence and the Zero-One Laws - Blog on Data Science</title>
+
+
+<meta name="author" content="Evgeni Ovcharov" />
+
+
+<meta name="description" content="A minimal Hugo theme with nice theme color." />
+
+
+<meta name="keywords" content="Probability" />
+
+
+<meta property="og:title" content="Complete Convergence and the Zero-One Laws" />
+<meta name="twitter:title" content="Complete Convergence and the Zero-One Laws" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/2018-08-24-complete-convergence/" /><meta property="og:description" content="Here we illustrate three of the famous zero-one laws for convergent sequences of random variables. Their names are: the Borel-Cantelli lemma, the second Borel-Cantelli lemma, and Kolmogorov&rsquo;s zero-one law. They are going to help us study the nuances in the relationship between almost sure convergence and complete convergence.
+ Suppose we are given an infinite sequence of random variables
+$$ \tag{1}{X_1, X_2, \dots} $$
+defined on some probability space $(\Omega, \mathcal A, \operatorname P)$. We list three different modes in which the sequence may be convergent to zero.
+ $(i)$ The sequence $(1)$ converges to zero in probability if for every $\epsilon&gt;0$  $$ \lim_{n\rightarrow \infty} \operatorname P(|X_n|&gt;\epsilon) = 0. $$
+ $(ii)$ The sequence $(1)$ converges to zero almost surely if for every $\epsilon&gt;0$  $$ \lim_{n\rightarrow \infty} \operatorname P({|X_n|&gt; \epsilon} \cup {|X_{n&#43;1}|&gt; \epsilon} \cup \cdots) = 0." />
+<meta name="twitter:description" content="Here we illustrate three of the famous zero-one laws for convergent sequences of random variables. Their names are: the Borel-Cantelli lemma, the second Borel-Cantelli lemma, and Kolmogorov&rsquo;s zero-one law. They are going to help us study the nuances in the relationship between almost sure convergence and complete convergence.
+ Suppose we are given an infinite sequence of random variables
+$$ \tag{1}{X_1, X_2, \dots} $$
+defined on some probability space $(\Omega, \mathcal A, \operatorname P)$. We list three different modes in which the sequence may be convergent to zero.
+ $(i)$ The sequence $(1)$ converges to zero in probability if for every $\epsilon&gt;0$  $$ \lim_{n\rightarrow \infty} \operatorname P(|X_n|&gt;\epsilon) = 0. $$
+ $(ii)$ The sequence $(1)$ converges to zero almost surely if for every $\epsilon&gt;0$  $$ \lim_{n\rightarrow \infty} \operatorname P({|X_n|&gt; \epsilon} \cup {|X_{n&#43;1}|&gt; \epsilon} \cup \cdots) = 0." /><meta property="og:image" content="/img/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="/img/og.png" /><meta property="article:published_time" content="2018-08-27T00:00:00+00:00" /><meta property="article:modified_time" content="2018-08-27T00:00:00+00:00" />
+
+
+<style>
+    @media (prefers-color-scheme: dark) {
+        body[data-theme='auto'] img {
+            filter: brightness(60%);
+        }
+    }
+
+    body[data-theme='dark'] img {
+        filter: brightness(60%);
+    }
+</style>
+
+
+
+<link rel="stylesheet" href="/assets/css/fuji.min.css" />
+
+
+
+
+
+</head>
+
+<body data-theme="auto">
+    <script data-cfasync="false">
+  
+  var fujiThemeData = localStorage.getItem('fuji_data-theme');
+  
+  if (!fujiThemeData) {
+    localStorage.setItem('fuji_data-theme', 'auto');
+  } else {
+    
+    if (fujiThemeData !== 'auto') {
+      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
+    }
+  }
+</script>
+    <header>
+    <div class="container-lg clearfix">
+        <div class="col-12 header">
+            <a class="title-main" href="/">Blog on Data Science</a>
+            
+            <span class="title-sub">Mathematics. Statistics. Algorithms.</span>
+            
+        </div>
+    </div>
+</header>
+
+    <main>
+        <div class="container-xl clearfix">
+            
+            <div class="col-12 col-md-9 float-left content">
+                
+<article>
+    
+    <h2 class="post-item post-title">
+        <a href="/post/2018-08-24-complete-convergence/">Complete Convergence and the Zero-One Laws</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2018-08-27</span><span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;972 words</span><span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/probability">Probability</a>&nbsp;</span>
+
+    </div>
+    
+    <div class="post-content markdown-body">
+        <p>Here we illustrate three of the famous zero-one laws for convergent sequences of random variables. Their names are: the <em>Borel-Cantelli lemma</em>, the <em>second Borel-Cantelli lemma</em>, and <em>Kolmogorov&rsquo;s zero-one law</em>. They are going to help us study the nuances in the relationship between almost sure convergence and complete convergence.</p>
+<hr>
+<p>Suppose we are given an infinite sequence of random variables</p>
+<!--
+\begin{equation}\label{eq: X}
+X_1, X_2, \dots
+\end{equation}
+-->
+<p>$$
+\tag{1}{X_1, X_2, \dots}
+$$</p>
+<p>defined on some probability space $(\Omega, \mathcal A, \operatorname P)$. We list three different modes in which the sequence may be convergent to zero.</p>
+<ul>
+<li>$(i)$ The sequence $(1)$ converges to zero in probability if for every $\epsilon&gt;0$</li>
+</ul>
+<p>$$
+\lim_{n\rightarrow \infty} \operatorname P(|X_n|&gt;\epsilon) = 0.
+$$</p>
+<ul>
+<li>$(ii)$ The sequence $(1)$ converges to zero almost surely if for every $\epsilon&gt;0$</li>
+</ul>
+<p>$$
+\lim_{n\rightarrow \infty} \operatorname P({|X_n|&gt; \epsilon} \cup {|X_{n+1}|&gt; \epsilon} \cup \cdots) = 0.
+$$</p>
+<p>It is easily seen that this is equivalent to $\operatorname P \left(\limsup_{n\to \infty }E_{n}\right)=0,$ which is equivalent to the usual condition $\operatorname P(\lim_{n\rightarrow\infty} X_n = 0)=1$.</p>
+<ul>
+<li>$(iii)$ The sequence $(1))$ converges to zero completely if for every $\epsilon&gt;0$</li>
+</ul>
+<p>$$
+\lim_{n\rightarrow \infty} \operatorname P({|X_n|&gt; \epsilon}) + \operatorname P({|X_{n+1}|&gt; \epsilon}) + \cdots = 0.
+$$</p>
+<p>Clearly, $(iii)$ implies $(ii)$ and $(i)$, and $(ii)$ implies $(i)$. The example: $\Omega = [0,1]$, $\operatorname P$ is the Lebesgue measure, $X_n = 1$ for $0&lt;\omega &lt; 1/n$, $X_n=0$ otherwise, shows that $(ii)$ does not imply $(iii)$.</p>
+<p>We are going to show that $(ii)$ and $(iii)$ are equivalent if $X_n$ are independent. To that end, we need to revise some facts.</p>
+<h3 id="borel-cantelli-lemma">Borel-Cantelli lemma</h3>
+<hr>
+<p>Let $E_1$, $E_2$,&hellip; be a sequence of events in some probability space. If the sum of the probabilities of $E_n$ is finite</p>
+<p>$$
+\sum_{n=1}^{\infty } \operatorname P(E_{n})&lt;\infty ,
+$$</p>
+<p>then the probability that infinitely many of them occur is $0$, that is,</p>
+<p>$$
+\operatorname P \left(\limsup_{n\to \infty }E_{n}\right)=0.
+$$</p>
+<hr>
+<p>The Borel-Cantelli lemma is an almost obvious fact which can be thought of as a more precise way of stating that complete convergence implies almost sure convergence, that is, that $(iii)$ implies $(ii)$. There is a partial converse to it, which is more useful to our goals.</p>
+<h3 id="second-borel-cantelli-lemma">Second Borel-Cantelli lemma</h3>
+<hr>
+<p>If the events $E_n$ are independent and the sum of the probabilities of $E_n$ diverges to infinity,</p>
+<p>$$
+\sum_{n=1}^{\infty} \operatorname P(E_{n})=\infty,
+$$</p>
+<p>then the probability that infinitely many of them occur is $1$,</p>
+<p>$$
+\operatorname P \left(\limsup_{n\rightarrow \infty } E_{n} \right) = 1.
+$$</p>
+<hr>
+<p>Denoting by $E_n$ the events  $E_n = \{ \mid X_n \mid &gt; \epsilon \}$, we have that they are independent under the assumption that $X_n$ are independent. If, in addition, $(ii)$ holds, but $(iii)$ does not, we reach to a contradiction in view of the second Borel-Cantelli lemma. Thus, under independence the latter two modes of convergences are equivalent.</p>
+<p>The last thing we would like to touch upon here is the limit of a sequence of independent random variables. Such a limit may only be a constant, but in order to show this we need another fundamental convergence result.</p>
+<h3 id="kolmogorovs-zeroone-law">Kolmogorov&rsquo;s zero–one law</h3>
+<hr>
+<p>Kolmogorov&rsquo;s zero–one law specifies that a certain type of event, called a <em>tail</em> event, will either almost surely happen or almost surely not happen; that is, the probability of such an event occurring is zero or one. Tail events are defined in terms of infinite sequences of random variables. Suppose $X_1, X_2, \dots$
+is an infinite sequence of independent random variables (not necessarily identically distributed). Let $\mathcal {F}$ be the $\sigma$-algebra generated by all $X_{i}$ in the sequence. Then, a tail event $F\in {\mathcal {F}}$ is an event which is probabilistically independent of each finite subset of these random variables. Note that $F$ belonging to $\mathcal {F}$ implies that whether $F$ occurs or not is uniquely determined by the values of all $X_{i}$.</p>
+<p>For example, the event that the sequence converges and the event that its sum converges are both tail events. In an infinite sequence of coin-tosses, a sequence of 100 consecutive heads occurring infinitely many times is a tail event. Intuitively, tail events are precisely those events whose occurrence can still be determined if an arbitrarily large but finite initial segment of the $X_{i}$ are removed. In many situations, it can be easy to apply Kolmogorov&rsquo;s zero–one law to show that some event has probability 0 or 1, but surprisingly hard to determine which of these two extreme values is the correct one.</p>
+<h3 id="exact-formulation-of-kolmogorovs-zeroone-law">Exact formulation of Kolmogorov&rsquo;s zero–one law</h3>
+<hr>
+<p>Let $(\Omega, \mathcal A, \operatorname P)$ be a probability space and let $\mathcal F_n$ be a sequence of mutually independent $\sigma$-algebras contained in $\mathcal F_n$. Let</p>
+<p>$$
+\mathcal G_{n}=\sigma {\bigg (}\bigcup_{k=n}^{\infty }\mathcal F_{k}{\bigg )}
+$$</p>
+<p>be the smallest $\sigma$-algebra containing $\mathcal F_n, \mathcal F_{n+1}, \dots$ Then for any event</p>
+<p>$$
+F \in \bigcap_{n=1}^{\infty } \mathcal G_{n}
+$$</p>
+<p>one has either $\operatorname P(F) = 0$ or $1$.</p>
+<hr>
+<p>We now apply Kolmogorov&rsquo;s zero–one law to show that the limit $X$ of a sequence of independent random variables $X_n$ must be a constant. The argument is valid for multivariate random variables of arbitrary dimension $d$. We begin by noticing that any set of the form $\{ X \in A \mid A \in \mathcal B(\operatorname R^d)\}$ represents a tail event. Therefore, there must be a sufficiently large hypercube $Q_0$ with sides parallel to the coordinate axes and center at the origin such that $\operatorname P(X \in Q_0) = 1.$ Dividing each side by two, we partition $Q_0$ into $2^d$ smaller hypercubes. In view of Kolmogorov&rsquo;s zero–one law, there must be exactly one of these hypercubes, denoted by $Q_1$, such that $\operatorname P(X \in Q_1) = 1$. We continue this process iteratively and obtain an infinite sequence $Q_0, Q_1, \dots$ of nested hypercubes. Following  Cantor&rsquo;s argument, the intersection of all these hypercubes is a single point, $c$, and it follows that $\operatorname P(X = c) = 1$. This concludes the proof of the claim that $X$ must be a constant.</p>
+
+    </div>
+</article>
+
+
+<div class="license markdown-body">
+    <blockquote>
+        <p>Unless otherwise noted, the content of this site is licensed under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"
+               target="_blank">CC BY-NC-SA 4.0</a>.</p>
+    </blockquote>
+</div>
+
+
+
+            </div>
+            <aside class="col-12 col-md-3 float-left sidebar">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/dsrkafuu" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+            <li>
+                <a href="https://twitter.com/dsrkafuu" target="_blank"><span>Twitter</span></a>
+            </li>
+            
+            <li>
+                <a href="https://space.bilibili.com/19767474" target="_blank"><span>bilibili</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/mathematical-analysis/">Mathematical Analysis</a>
+            </span>
+            
+            <span>
+                <a href="/tags/probability/">Probability</a>
+            </span>
+            
+            <span>
+                <a href="/tags/programming-in-r/">Programming in R</a>
+            </span>
+            
+            <span>
+                <a href="/tags/regression/">Regression</a>
+            </span>
+            
+        </div>
+    </div>
+    <div class="sidebar-item sidebar-toc">
+        <h3>TOC</h3><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#borel-cantelli-lemma">Borel-Cantelli lemma</a></li>
+        <li><a href="#second-borel-cantelli-lemma">Second Borel-Cantelli lemma</a></li>
+        <li><a href="#kolmogorovs-zeroone-law">Kolmogorov&rsquo;s zero–one law</a></li>
+        <li><a href="#exact-formulation-of-kolmogorovs-zeroone-law">Exact formulation of Kolmogorov&rsquo;s zero–one law</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+</aside>
+        </div>
+        <div class="btn">
+    <div class="btn-menu" id="btn-menu">
+        <i class="iconfont icon-grid-sharp"></i>
+    </div>
+    <div class="btn-toggle-mode">
+        <i class="iconfont icon-contrast-sharp"></i>
+    </div>
+    <div class="btn-scroll-top">
+        <i class="iconfont icon-chevron-up-circle-sharp"></i>
+    </div>
+</div>
+<aside class="sidebar-mobile" style="display: none;">
+  <div class="sidebar-wrapper">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/dsrkafuu" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+            <li>
+                <a href="https://twitter.com/dsrkafuu" target="_blank"><span>Twitter</span></a>
+            </li>
+            
+            <li>
+                <a href="https://space.bilibili.com/19767474" target="_blank"><span>bilibili</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/mathematical-analysis/">Mathematical Analysis</a>
+            </span>
+            
+            <span>
+                <a href="/tags/probability/">Probability</a>
+            </span>
+            
+            <span>
+                <a href="/tags/programming-in-r/">Programming in R</a>
+            </span>
+            
+            <span>
+                <a href="/tags/regression/">Regression</a>
+            </span>
+            
+        </div>
+    </div>
+    
+    
+    
+    <div class="sidebar-item sidebar-toc">
+        <h3>TOC</h3>
+        <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#borel-cantelli-lemma">Borel-Cantelli lemma</a></li>
+        <li><a href="#second-borel-cantelli-lemma">Second Borel-Cantelli lemma</a></li>
+        <li><a href="#kolmogorovs-zeroone-law">Kolmogorov&rsquo;s zero–one law</a></li>
+        <li><a href="#exact-formulation-of-kolmogorovs-zeroone-law">Exact formulation of Kolmogorov&rsquo;s zero–one law</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+    
+    
+  </div>
+</aside>
+    </main>
+
+    
+
+
+
+
+<script>
+window.MathJax = {
+    options: {
+        renderActions: {
+            addMenu: []
+        },
+        skipHtmlTags: ["script", "style", "textarea", "pre", "code"],   
+        includeHtmlTags: {br: '\n', wbr: '', '#comment': ''},   
+    },
+    loader: {
+        load: ['[tex]/tagFormat']
+    },
+    tex: {
+        inlineMath: [ ["$","$"] ],
+        displayMath: [ ["$$","$$"] ],
+        processEscapes: false,
+        packages: {'[+]': ['tagFormat']},
+        digits: /^(?:[\d۰-۹]+(?:[,٬'][\d۰-۹]{3})*(?:[\.\/٫][\d۰-۹]*)?|[\.\/٫][\d۰-۹]+)/,    
+        tagSide: "right",
+        tagIndent: ".8em",
+        multlineWidth: "85%",
+        
+        
+        tagFormat: {
+            number: function(n){
+                return String(n)
+                        .replace(/0/g,"۰")
+                        .replace(/1/g,"۱")
+                        .replace(/2/g,"۲")
+                        .replace(/3/g,"۳")
+                        .replace(/4/g,"۴")
+                        .replace(/5/g,"۵")
+                        .replace(/6/g,"۶")
+                        .replace(/7/g,"۷")
+                        .replace(/8/g,"۸")
+                        .replace(/9/g,"۹");
+            }
+        }
+    },
+    svg: {
+        fontCache: 'global',        
+        mtextInheritFont: true,     
+        scale: 0.97,                
+        minScale: 0.6               
+    }
+};
+</script>
+<script id="MathJax-script" async
+   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+
+    <footer>
+    <div class="container-lg clearfix">
+        <div class="col-12 footer">
+            
+            <span>&copy; 2020-2021
+                <a href="/">Evgeni Ovcharov</a>
+                 | <a href="https://github.com/itsme/my_blog">Source code</a> 
+                | Powered by <a href="https://github.com/dsrkafuu/hugo-theme-fuji/"
+                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
+                                                    target="_blank">Hugo</a> 
+            </span>
+        </div>
+    </div>
+</footer>
+
+    
+<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.0/lazysizes.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+
+
+<script defer src="/assets/js/fuji.min.js"></script>
+
+
+</body>
+
+</html>

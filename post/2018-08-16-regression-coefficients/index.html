@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="HandheldFriendly" content="True" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="generator" content="Hugo 0.80.0" />
+
+
+<link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/dsrkafuu/dsr-cdn@1/images/favicons/dsrca/favicon.ico" />
+
+
+
+<title>Unbiasedness and Consistency of the Regression Coefficients - Blog on Data Science</title>
+
+
+<meta name="author" content="Evgeni Ovcharov" />
+
+
+<meta name="description" content="A minimal Hugo theme with nice theme color." />
+
+
+<meta name="keywords" content="Regression" />
+
+
+<meta property="og:title" content="Unbiasedness and Consistency of the Regression Coefficients" />
+<meta name="twitter:title" content="Unbiasedness and Consistency of the Regression Coefficients" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/2018-08-16-regression-coefficients/" /><meta property="og:description" content="Here we consider the basic asymptotic properties of the coefficient estimators in a simple linear regression. Many readers when first acquainted with the subject stay under the expression that this is a rather tedious and technical matter. In what follows, we would like to show that when approached from the right perspective, the subject becomes rather intuitive and clear.
+Derivation of the estimators We consider a simple linear regression model
+$$ Y = \beta_0 &#43; \beta_1 X &#43; \epsilon, $$
+where $X$ and $Y$ are random variables, $\beta_0$, $\beta_1$ are constants and $\epsilon$ is the random error. We assume that the observations $(x_1,y_1), \dots, (x_n,y_n)$ are independently and identically distributed. In the ordinary least squares (OLS) method, we want to minimize the mean squared error" />
+<meta name="twitter:description" content="Here we consider the basic asymptotic properties of the coefficient estimators in a simple linear regression. Many readers when first acquainted with the subject stay under the expression that this is a rather tedious and technical matter. In what follows, we would like to show that when approached from the right perspective, the subject becomes rather intuitive and clear.
+Derivation of the estimators We consider a simple linear regression model
+$$ Y = \beta_0 &#43; \beta_1 X &#43; \epsilon, $$
+where $X$ and $Y$ are random variables, $\beta_0$, $\beta_1$ are constants and $\epsilon$ is the random error. We assume that the observations $(x_1,y_1), \dots, (x_n,y_n)$ are independently and identically distributed. In the ordinary least squares (OLS) method, we want to minimize the mean squared error" /><meta property="og:image" content="/img/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="/img/og.png" /><meta property="article:published_time" content="2018-08-16T00:00:00+00:00" /><meta property="article:modified_time" content="2018-08-16T00:00:00+00:00" />
+
+
+<style>
+    @media (prefers-color-scheme: dark) {
+        body[data-theme='auto'] img {
+            filter: brightness(60%);
+        }
+    }
+
+    body[data-theme='dark'] img {
+        filter: brightness(60%);
+    }
+</style>
+
+
+
+<link rel="stylesheet" href="/assets/css/fuji.min.css" />
+
+
+
+
+
+</head>
+
+<body data-theme="auto">
+    <script data-cfasync="false">
+  
+  var fujiThemeData = localStorage.getItem('fuji_data-theme');
+  
+  if (!fujiThemeData) {
+    localStorage.setItem('fuji_data-theme', 'auto');
+  } else {
+    
+    if (fujiThemeData !== 'auto') {
+      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
+    }
+  }
+</script>
+    <header>
+    <div class="container-lg clearfix">
+        <div class="col-12 header">
+            <a class="title-main" href="/">Blog on Data Science</a>
+            
+            <span class="title-sub">Mathematics. Statistics. Algorithms.</span>
+            
+        </div>
+    </div>
+</header>
+
+    <main>
+        <div class="container-xl clearfix">
+            
+            <div class="col-12 col-md-9 float-left content">
+                
+<article>
+    
+    <h2 class="post-item post-title">
+        <a href="/post/2018-08-16-regression-coefficients/">Unbiasedness and Consistency of the Regression Coefficients</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2018-08-16</span><span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;1075 words</span><span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/regression">Regression</a>&nbsp;</span>
+
+    </div>
+    
+    <div class="post-content markdown-body">
+        <p>Here we consider the basic asymptotic properties of the coefficient estimators in a simple linear regression. Many readers when first acquainted with the subject stay under the expression that this is a rather tedious and technical matter. In what follows, we would like to show that when approached from the right perspective, the subject becomes rather intuitive and clear.</p>
+<h2 id="derivation-of-the-estimators">Derivation of the estimators</h2>
+<p>We consider a simple linear regression model</p>
+<p>$$
+Y = \beta_0 + \beta_1 X + \epsilon,
+$$</p>
+<p>where $X$ and $Y$ are random variables, $\beta_0$, $\beta_1$ are constants and $\epsilon$ is the random error. We assume that the observations $(x_1,y_1), \dots, (x_n,y_n)$ are independently and identically distributed. In the ordinary least squares (OLS) method, we want to minimize the mean squared error</p>
+<p>$$
+\tag{1}
+\min J(b_0, b_1) = \frac 1 n \sum_i (y_i - b_0 - b_1 x_i)^2
+$$
+in terms of the unknown constants $b_0$, $b_1$. Solving</p>
+<p>$$
+\frac{\partial J(b_0, b_1)}{\partial b_0} = \frac 2 n \sum_i (y_i - b_0 - b_1 x_i) = 0
+$$</p>
+<p>for $b_0$, we obtain $\hat \beta_0 = \bar y - b_1 \bar x$. After finding the optimal value for $b_1$, which we denote by $\hat \beta_1$, we will get the relation $\bar y  = \hat \beta_0 + \hat \beta_1\bar x$. This means that the regression line always passes through the point $(\bar x, \bar y)$. Since the objective function $J$ is convex, its critical points are minima. That is why we may substitute $\hat \beta_0 = \bar y - b_1 \bar x$ in the expression for $J(b_0, b_1)$ in $(1)$ and eliminate $b_0$</p>
+<p>$$
+J(b_0, b_1) = J(b_1) = \frac 1 n \sum_i ((y_i - \bar y)  - b_1 (x_i-\bar x))^2.
+$$</p>
+<p>Comparing the above with $(1)$, we notice that centering the data leads to a regression model with zero free term, that is, to a regression line through the origin. (Of course for the original, uncentered data $\hat\beta_0$ would typically not be zero.) Solving for $b_1$ in</p>
+<p>$$
+\frac{\partial J(b_1)}{\partial b_1} = \frac 2 n \sum_i (x_i-\bar x)((y_i - \bar y)  - b_1 (x_i-\bar x)) = 0
+$$</p>
+<p>we obtain that</p>
+<p>$$
+\hat \beta_1 = \frac {c_{xy}}{d_x} = \frac{\frac 1 n \sum_i (x_i-\bar x)(y_i - \bar y)}{\frac 1 n \sum_i (x_i-\bar x)(x_i - \bar x)}.
+$$</p>
+<p>Notice that $\hat \beta_1$ is the ratio of the sample covariance between $X$ and $Y$ and the sample variance of $X$.</p>
+<h2 id="asymptotic-properties">Asymptotic properties</h2>
+<p>Here, we address the questions whether the estimators $\hat \beta_0$ and $\hat \beta_1$ are unbiased and consistent. <!--To quantify their accuracy, we are going to compute their variance as well.--> We first treat the case of the $\hat \beta_1$ estimator. The trick is to write it in the form</p>
+<p>$$
+\hat \beta_1 = \beta_1 + \text{&ldquo;an error term&rdquo;}.
+$$</p>
+<p>In the expression of $c_{xy}$ we substitute $y_i$ with the model relation $y_i - \bar y = \beta_1(x_i - \bar x) + \epsilon_i$. We arrive immediately at</p>
+<p>$$
+\tag{2}
+\hat \beta_1 = \beta_1 + \frac{\sum_i (x_i-\bar x)(\epsilon_i - \bar \epsilon)}{\sum_i (x_i-\bar x)(x_i - \bar x)} = \beta_1 + \frac {c_{x\epsilon}}{d_x},
+$$</p>
+<p>where $c_{x\epsilon}$ denotes the sample covariance between $(x_1,\dots, x_n)$ and $(\epsilon_1,\dots,\epsilon_n)$. Notice that since $\sum_i (x_i-\bar x)\bar \epsilon = 0$ we may freely add or subtract this term to the above expression.</p>
+<p>The standard assumptions for the error terms $\epsilon_i$ are that they are mutually independent and also $\operatorname E[\epsilon_i] = 0$, which imposes no real restriction as the mean error may always be subsumed in the free term $\beta_0$. In connection to the predictors, some models make the quite restrictive assumption of independence between the error terms and the predictors. Here we are going to assume the weaker condition $\operatorname E[\epsilon_i \mid X] = 0$ instead.  As an immediate consequence of the latter we have that</p>
+<p>$$
+\operatorname E[\epsilon_i] = \operatorname E [\operatorname E[\epsilon_i \mid X]] = 0
+$$</p>
+<p>and also that $X$ and $\epsilon$ are uncorrelated. Indeed,</p>
+<p>$$
+\operatorname{cov}(X,\epsilon) = \operatorname E[X\epsilon] - \operatorname E[X]\operatorname E[\epsilon] = \operatorname E \operatorname E[X\epsilon \mid X]] - 0 = 0.
+$$</p>
+<p>We may write  $\hat \beta_1$ in the form</p>
+<p>$$
+\hat \beta_1 = \beta_1 + \sum_i \phi(x_1,\dots, x_n )\epsilon_i.
+$$</p>
+<p>Using the fact that $\operatorname E[\epsilon_i \mid x_1,\dots, x_n] = 0$, we find that $\hat \beta_1$ is unbiased</p>
+<p>$$
+\operatorname E[\hat \beta_1] = \beta_1 + \operatorname E [\phi(x_1,\dots, x_n )\operatorname E[\epsilon_i \mid x_1,\dots, x_n]] = \beta_1.
+$$</p>
+<p>For $\hat \beta_0 = \bar y - \hat \beta_1 \bar x$, we have</p>
+<p>$$
+\operatorname E[\hat \beta_0] = \operatorname E[\bar y] - \operatorname E [\operatorname E[\hat \beta_1 \bar x\mid x_1,\dots, x_n]] = \operatorname E[Y] - \beta_1 \operatorname E[X] = \beta_0.
+$$</p>
+<p>Thus $\hat \beta_0$ is also an unbiased estimator.</p>
+<p>By the law of large numbers $c_{x\epsilon} \rightarrow \operatorname{cov}(X,\epsilon)=0$ and $d_x \rightarrow \operatorname D[X]$, the variance of $X$. In view of $(2)$, we conclude that $\hat \beta_1 \rightarrow \beta_1$ is a consistent estimator. Similarly,</p>
+<p>$$
+\hat \beta_0 = \bar y - \hat \beta_1 \bar x \rightarrow \operatorname E[Y] - \beta_1 \operatorname E[X] = \beta_0
+$$</p>
+<p>is also a consistent estimator.</p>
+<h2 id="numerical-example">Numerical example</h2>
+<p>Here, we are going to verify the law of large numbers empirically. We shall check whether the sample covariance converges to the population covariance as the number of trials tends to infinity. Let us consider $Y \sim N(0, X^2)$, $X \sim U(0,1)$. We have that $\operatorname E[Y\mid X] =0$ and from the law of total expectation $\operatorname E[Y] = 0$ and $\operatorname E[XY] = 0$. Hence, $\operatorname{cov}(X,Y)= \operatorname E[XY] - \operatorname E[X]\operatorname E[Y] = 0$, but $X$ and $Y$ are not independent as the knowledge of $X$ alters the probability distribution of $Y$.</p>
+<p>Below is a code in R which produces the numerical experiment. Here $m_{xy}$ is the sample mean of $XY$, $c_{xy}$ is the sample covariance of $X$ and $Y$, $d_x = c_{xx}$ is the sample variance of $X$, and  $d_y = c_{yy}$ is the sample variance of $Y$.</p>
+<pre><code class="language-r">m_xy = numeric(); c_xy = numeric(); d_x = numeric(); d_y = numeric();
+size = c(10, 100, 1000, 10000, 100000)
+for(n in size){
+  x = runif(n); y = rnorm(n, 0, x*x);
+  m = mean(x*y); m_xy = c(m_xy, m);
+  c_xy = c(c_xy, m - mean(x)*mean(y))
+  d_x = c(d_x, var(x)); d_y = c(d_y, var(y))
+}
+data = data.frame(m_xy = m_xy, c_xy = c_xy, d_x = d_x, d_y = d_y, row.names = size)
+</code></pre>
+<p>The results are shown in the table below.</p>
+<center>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">$n$</th>
+<th style="text-align:center">$m_{xy}$</th>
+<th style="text-align:center">$c_{xy}$</th>
+<th style="text-align:left">$d_x$</th>
+<th style="text-align:left">$d_y$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">10</td>
+<td style="text-align:center">-0.0220692</td>
+<td style="text-align:center">-0.0130559</td>
+<td style="text-align:left">0.0931474</td>
+<td style="text-align:left">0.1335045</td>
+</tr>
+<tr>
+<td style="text-align:left">100</td>
+<td style="text-align:center">0.0177529</td>
+<td style="text-align:center">0.0153785</td>
+<td style="text-align:left">0.0878564</td>
+<td style="text-align:left">0.1566800</td>
+</tr>
+<tr>
+<td style="text-align:left">1000</td>
+<td style="text-align:center">-0.0008616</td>
+<td style="text-align:center">0.0005846</td>
+<td style="text-align:left">0.0819234</td>
+<td style="text-align:left">0.1919942</td>
+</tr>
+<tr>
+<td style="text-align:left">10000</td>
+<td style="text-align:center">-0.0047650</td>
+<td style="text-align:center">-0.0015213</td>
+<td style="text-align:left">0.0832527</td>
+<td style="text-align:left">0.2027653</td>
+</tr>
+<tr>
+<td style="text-align:left">100000</td>
+<td style="text-align:center">0.0008292</td>
+<td style="text-align:center">0.0004920</td>
+<td style="text-align:left">0.0833878</td>
+<td style="text-align:left">0.1992950</td>
+</tr>
+</tbody>
+</table>
+</center>
+<style>
+table {
+    width:100%;
+}
+</style>
+
+    </div>
+</article>
+
+
+<div class="license markdown-body">
+    <blockquote>
+        <p>Unless otherwise noted, the content of this site is licensed under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"
+               target="_blank">CC BY-NC-SA 4.0</a>.</p>
+    </blockquote>
+</div>
+
+
+
+            </div>
+            <aside class="col-12 col-md-3 float-left sidebar">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/dsrkafuu" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+            <li>
+                <a href="https://twitter.com/dsrkafuu" target="_blank"><span>Twitter</span></a>
+            </li>
+            
+            <li>
+                <a href="https://space.bilibili.com/19767474" target="_blank"><span>bilibili</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/mathematical-analysis/">Mathematical Analysis</a>
+            </span>
+            
+            <span>
+                <a href="/tags/probability/">Probability</a>
+            </span>
+            
+            <span>
+                <a href="/tags/programming-in-r/">Programming in R</a>
+            </span>
+            
+            <span>
+                <a href="/tags/regression/">Regression</a>
+            </span>
+            
+        </div>
+    </div>
+    <div class="sidebar-item sidebar-toc">
+        <h3>TOC</h3><nav id="TableOfContents">
+  <ul>
+    <li><a href="#derivation-of-the-estimators">Derivation of the estimators</a></li>
+    <li><a href="#asymptotic-properties">Asymptotic properties</a></li>
+    <li><a href="#numerical-example">Numerical example</a></li>
+  </ul>
+</nav></div>
+</aside>
+        </div>
+        <div class="btn">
+    <div class="btn-menu" id="btn-menu">
+        <i class="iconfont icon-grid-sharp"></i>
+    </div>
+    <div class="btn-toggle-mode">
+        <i class="iconfont icon-contrast-sharp"></i>
+    </div>
+    <div class="btn-scroll-top">
+        <i class="iconfont icon-chevron-up-circle-sharp"></i>
+    </div>
+</div>
+<aside class="sidebar-mobile" style="display: none;">
+  <div class="sidebar-wrapper">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/dsrkafuu" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+            <li>
+                <a href="https://twitter.com/dsrkafuu" target="_blank"><span>Twitter</span></a>
+            </li>
+            
+            <li>
+                <a href="https://space.bilibili.com/19767474" target="_blank"><span>bilibili</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/mathematical-analysis/">Mathematical Analysis</a>
+            </span>
+            
+            <span>
+                <a href="/tags/probability/">Probability</a>
+            </span>
+            
+            <span>
+                <a href="/tags/programming-in-r/">Programming in R</a>
+            </span>
+            
+            <span>
+                <a href="/tags/regression/">Regression</a>
+            </span>
+            
+        </div>
+    </div>
+    
+    
+    
+    <div class="sidebar-item sidebar-toc">
+        <h3>TOC</h3>
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#derivation-of-the-estimators">Derivation of the estimators</a></li>
+    <li><a href="#asymptotic-properties">Asymptotic properties</a></li>
+    <li><a href="#numerical-example">Numerical example</a></li>
+  </ul>
+</nav>
+    </div>
+    
+    
+  </div>
+</aside>
+    </main>
+
+    
+
+
+
+
+<script>
+window.MathJax = {
+    options: {
+        renderActions: {
+            addMenu: []
+        },
+        skipHtmlTags: ["script", "style", "textarea", "pre", "code"],   
+        includeHtmlTags: {br: '\n', wbr: '', '#comment': ''},   
+    },
+    loader: {
+        load: ['[tex]/tagFormat']
+    },
+    tex: {
+        inlineMath: [ ["$","$"] ],
+        displayMath: [ ["$$","$$"] ],
+        processEscapes: false,
+        packages: {'[+]': ['tagFormat']},
+        digits: /^(?:[\d۰-۹]+(?:[,٬'][\d۰-۹]{3})*(?:[\.\/٫][\d۰-۹]*)?|[\.\/٫][\d۰-۹]+)/,    
+        tagSide: "right",
+        tagIndent: ".8em",
+        multlineWidth: "85%",
+        
+        
+        tagFormat: {
+            number: function(n){
+                return String(n)
+                        .replace(/0/g,"۰")
+                        .replace(/1/g,"۱")
+                        .replace(/2/g,"۲")
+                        .replace(/3/g,"۳")
+                        .replace(/4/g,"۴")
+                        .replace(/5/g,"۵")
+                        .replace(/6/g,"۶")
+                        .replace(/7/g,"۷")
+                        .replace(/8/g,"۸")
+                        .replace(/9/g,"۹");
+            }
+        }
+    },
+    svg: {
+        fontCache: 'global',        
+        mtextInheritFont: true,     
+        scale: 0.97,                
+        minScale: 0.6               
+    }
+};
+</script>
+<script id="MathJax-script" async
+   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+
+    <footer>
+    <div class="container-lg clearfix">
+        <div class="col-12 footer">
+            
+            <span>&copy; 2020-2021
+                <a href="/">Evgeni Ovcharov</a>
+                 | <a href="https://github.com/itsme/my_blog">Source code</a> 
+                | Powered by <a href="https://github.com/dsrkafuu/hugo-theme-fuji/"
+                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
+                                                    target="_blank">Hugo</a> 
+            </span>
+        </div>
+    </div>
+</footer>
+
+    
+<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.0/lazysizes.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+
+
+<script defer src="/assets/js/fuji.min.js"></script>
+
+
+</body>
+
+</html>

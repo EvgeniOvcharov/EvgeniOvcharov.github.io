@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="HandheldFriendly" content="True" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="generator" content="Hugo 0.80.0" />
+
+
+<link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/dsrkafuu/dsr-cdn@1/images/favicons/dsrca/favicon.ico" />
+
+
+
+<title>Reading multiple csv files in R - Blog on Data Science</title>
+
+
+<meta name="author" content="Evgeni Ovcharov" />
+
+
+<meta name="description" content="A minimal Hugo theme with nice theme color." />
+
+
+<meta name="keywords" content="Programming in R" />
+
+
+<meta property="og:title" content="Reading multiple csv files in R" />
+<meta name="twitter:title" content="Reading multiple csv files in R" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/2019-08-21-reading-csv-files/" /><meta property="og:description" content="Comma-separated value (csv) files are one of the most common file formats used in data analysis today. Sometimes we need to read multiple csv files from disk and combine them into a single data frame or data table object in R. We shall explore five different approaches to that task and determine the most efficient one. First, let us make sure that we know how to answer the following question:
+How to list the files in a given directory? The function list.files() lists all files in a given directory whose names contain a specific character pattern. An example of its use can be the following:
+list.files(path = &quot;./csv/&quot;, pattern = &quot;^f.*199&quot;, full.names = TRUE)[1] &quot;./csv/football-results-1998.csv&quot; &quot;./csv/football-results-1999.csv&quot; The output is a character vector giving the names of the files matching the search criterion." />
+<meta name="twitter:description" content="Comma-separated value (csv) files are one of the most common file formats used in data analysis today. Sometimes we need to read multiple csv files from disk and combine them into a single data frame or data table object in R. We shall explore five different approaches to that task and determine the most efficient one. First, let us make sure that we know how to answer the following question:
+How to list the files in a given directory? The function list.files() lists all files in a given directory whose names contain a specific character pattern. An example of its use can be the following:
+list.files(path = &quot;./csv/&quot;, pattern = &quot;^f.*199&quot;, full.names = TRUE)[1] &quot;./csv/football-results-1998.csv&quot; &quot;./csv/football-results-1999.csv&quot; The output is a character vector giving the names of the files matching the search criterion." /><meta property="og:image" content="/img/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="/img/og.png" /><meta property="article:published_time" content="2019-08-24T00:00:00+00:00" /><meta property="article:modified_time" content="2019-08-24T00:00:00+00:00" />
+
+
+<style>
+    @media (prefers-color-scheme: dark) {
+        body[data-theme='auto'] img {
+            filter: brightness(60%);
+        }
+    }
+
+    body[data-theme='dark'] img {
+        filter: brightness(60%);
+    }
+</style>
+
+
+
+<link rel="stylesheet" href="/assets/css/fuji.min.css" />
+
+
+
+
+
+</head>
+
+<body data-theme="auto">
+    <script data-cfasync="false">
+  
+  var fujiThemeData = localStorage.getItem('fuji_data-theme');
+  
+  if (!fujiThemeData) {
+    localStorage.setItem('fuji_data-theme', 'auto');
+  } else {
+    
+    if (fujiThemeData !== 'auto') {
+      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
+    }
+  }
+</script>
+    <header>
+    <div class="container-lg clearfix">
+        <div class="col-12 header">
+            <a class="title-main" href="/">Blog on Data Science</a>
+            
+            <span class="title-sub">Mathematics. Statistics. Algorithms.</span>
+            
+        </div>
+    </div>
+</header>
+
+    <main>
+        <div class="container-xl clearfix">
+            
+            <div class="col-12 col-md-9 float-left content">
+                
+<article>
+    
+    <h2 class="post-item post-title">
+        <a href="/post/2019-08-21-reading-csv-files/">Reading multiple csv files in R</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2019-08-24</span><span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;831 words</span><span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/programming-in-r">Programming in R</a>&nbsp;</span>
+
+    </div>
+    
+    <div class="post-content markdown-body">
+        <p>Comma-separated value (csv) files are one of the most common file formats used in data analysis today. Sometimes we need to read multiple csv files from disk and combine them into a single data frame or data table object in R. We shall explore five different approaches to that task and determine the most efficient one. First, let us make sure that we know how to answer the following question:</p>
+<h3 id="how-to-list-the-files-in-a-given-directory">How to list the files in a given directory?</h3>
+<p>The function <code>list.files()</code> lists all files in a given directory whose names contain a specific character pattern. An example of its use can be the following:</p>
+<pre><code class="language-r">list.files(path = &quot;./csv/&quot;, pattern = &quot;^f.*199&quot;, full.names = TRUE)
+
+[1] &quot;./csv/football-results-1998.csv&quot; &quot;./csv/football-results-1999.csv&quot;
+</code></pre>
+<p>The output is a character vector giving the names of the files matching the search criterion. In our example, we have called the function with the following options:</p>
+<ul>
+<li>
+<p><code>path = &quot;./csv/&quot;</code> the directory path is set to the csv subdirectory of the working directory;</p>
+</li>
+<li>
+<p><code>pattern = &quot;^f.*199&quot;</code> a <em>regex</em> expression matching strings starting with the character <em>f</em>, followed by an unspecified number of arbitrary characters, followed by <em>199</em>;</p>
+</li>
+<li>
+<p><code>full.names = TRUE</code> the path is attached to the returned file names.</p>
+</li>
+</ul>
+<h3 id="examining-five-approaches">Examining five approaches</h3>
+<p>The stated problem is different from looking for the fastest way to read one large csv file into memory. In our use case we need to import multiple csv files (say 10 or more), each having many columns (say 10 or more), which we need to row bind together to produce a single large data frame or data table object. We next list five approaches to that task in increasing order of efficiency.</p>
+<p>The variable <code>files</code> in the code below is a character vector containing a list of names of csv files, for example as produced by <code>list.files()</code>.</p>
+<h4 id="1-sequentially-reading-and-binding-all-data-frames">1. Sequentially reading and binding all data frames</h4>
+<pre><code class="language-r">table = NULL
+for (file in files)
+  table = rbind(table, read.csv(file))
+</code></pre>
+<p>This is the least efficient solution in which we simply append each data frame sequentially, starting with an empty <code>data.frame</code> object. At each step R stores the intermediate data frame at some new address in memory, which results in copying the data of the earlier data frames multiple times.</p>
+<h4 id="2-making-a-single-call-to-rbind----and-passing-all-data-frames-as-a-list-of-arguments--">2. Making a single call to <code>rbind()</code> <!-- and passing all data frames as a list of arguments--></h4>
+<pre><code class="language-r">table = lapply(files, read.csv) %&gt;% do.call(rbind, .)
+</code></pre>
+<p>Here we use the fact that the function <code>rbind()</code> can simultaneously bind together multiple data frames, which is significantly faster than the previous approach. A special feature of R functions like <code>rbind()</code> is having a dynamic argument list. The R way of passing a variable number of arguments to a function is by invoking the method <code>do.call()</code>.</p>
+<h4 id="3-further-optimization-with-rbindlist">3. Further optimization with <code>rbindlist()</code></h4>
+<pre><code class="language-r">table = lapply(files, read.csv) %&gt;% rbindlist()
+</code></pre>
+<p>The row binding of multiple data frames and other matrix-like structures with the same column names can be optimized with the function <code>rbindlist()</code>, a member of the <code>data.table</code> package.</p>
+<h4 id="4-a-solution-based-on-the-newer-readr-package">4. A solution based on the newer <code>readr</code> package</h4>
+<pre><code class="language-r">col_spec = spec_csv(files[1])
+table = lapply(files, read_csv, col_types = col_spec) %&gt;% rbindlist()
+</code></pre>
+<p>Another optimization may come from the replacement of <code>read.csv()</code> with a faster analogue of it. Such is the function <code>read_csv()</code> from the package <code>readr</code>. The function <code>read_csv()</code>, however, may be very slow and inefficient if it has to determine the column types of the data very often. To overcome this problem we have first invoked <code>readr::spec_csv()</code> to automatically set up the column types before running the rest of the code.</p>
+<h4 id="5-a-solution-based-on-the-datatable-package">5. A solution based on the <code>data.table</code> package</h4>
+<pre><code class="language-r">table = lapply(files, fread) %&gt;% rbindlist()
+</code></pre>
+<p>The package <code>data.table</code> is a modern and much optimized analogue to the more familiar package <code>data.frame</code>. The function <code>fread()</code> from <code>data.table</code> is designed to read a csv file into a <code>data.table</code> object. For large csv files it can be an order of magnitude faster than <code>read.csv()</code>.</p>
+<h3 id="comparison-of-running-times">Comparison of running times</h3>
+<p>We have benchmarked the relative efficiency of each approach in the table below.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> test </th>
+   <th style="text-align:right;"> replications </th>
+   <th style="text-align:right;"> elapsed </th>
+   <th style="text-align:right;"> user </th>
+   <th style="text-align:right;"> system </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> fread </td>
+   <td style="text-align:right;"> 100 </td>
+   <td style="text-align:right;"> 3.37 </td>
+   <td style="text-align:right;"> 2.84 </td>
+   <td style="text-align:right;"> 0.53 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> read_csv </td>
+   <td style="text-align:right;"> 100 </td>
+   <td style="text-align:right;"> 9.02 </td>
+   <td style="text-align:right;"> 5.83 </td>
+   <td style="text-align:right;"> 2.81 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> rbindlist </td>
+   <td style="text-align:right;"> 100 </td>
+   <td style="text-align:right;"> 16.51 </td>
+   <td style="text-align:right;"> 16.09 </td>
+   <td style="text-align:right;"> 0.42 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> do.call </td>
+   <td style="text-align:right;"> 100 </td>
+   <td style="text-align:right;"> 19.48 </td>
+   <td style="text-align:right;"> 19.06 </td>
+   <td style="text-align:right;"> 0.41 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> sequential </td>
+   <td style="text-align:right;"> 100 </td>
+   <td style="text-align:right;"> 36.83 </td>
+   <td style="text-align:right;"> 36.26 </td>
+   <td style="text-align:right;"> 0.50 </td>
+  </tr>
+</tbody>
+</table>
+<p>Apart from these results, we also note the following:</p>
+<ul>
+<li>
+<p>The test involves reading 22 csv files with 15 columns (a mixture of character and integer values) and around 1000 rows each with actual data on international football matches. The elapsed time in the table above is given in seconds for 100 repetitions.</p>
+</li>
+<li>
+<p>The relative performance of the functions <code>fread()</code>, <code>read_csv()</code> and <code>read.csv()</code> under equal conditions may be gleaned from the first three results in the table above.</p>
+</li>
+<li>
+<p>The method <code>rbindlist()</code> is faster than <code>rbind()</code> called with <code>do.call()</code> for multiple <code>data.frame</code> elements, but not for <code>data.table</code> ones. So, in fact replacing Solution 5 above with the code <code>table = lapply(files, fread) %&gt;% do.call(rbind, .)</code> results in marginally faster running times.</p>
+</li>
+<li>
+<p>Without specifying the column types in <code>read_csv()</code> the function runs very slowly and we get a 4-5 fold reduction in speed. Its default usage, such as in <code>lapply(files, read_csv)</code> is not recommended in a set-up like ours.</p>
+</li>
+</ul>
+
+    </div>
+</article>
+
+
+<div class="license markdown-body">
+    <blockquote>
+        <p>Unless otherwise noted, the content of this site is licensed under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"
+               target="_blank">CC BY-NC-SA 4.0</a>.</p>
+    </blockquote>
+</div>
+
+
+
+            </div>
+            <aside class="col-12 col-md-3 float-left sidebar">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/dsrkafuu" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+            <li>
+                <a href="https://twitter.com/dsrkafuu" target="_blank"><span>Twitter</span></a>
+            </li>
+            
+            <li>
+                <a href="https://space.bilibili.com/19767474" target="_blank"><span>bilibili</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/mathematical-analysis/">Mathematical Analysis</a>
+            </span>
+            
+            <span>
+                <a href="/tags/probability/">Probability</a>
+            </span>
+            
+            <span>
+                <a href="/tags/programming-in-r/">Programming in R</a>
+            </span>
+            
+            <span>
+                <a href="/tags/regression/">Regression</a>
+            </span>
+            
+        </div>
+    </div>
+    <div class="sidebar-item sidebar-toc">
+        <h3>TOC</h3><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#how-to-list-the-files-in-a-given-directory">How to list the files in a given directory?</a></li>
+        <li><a href="#examining-five-approaches">Examining five approaches</a></li>
+        <li><a href="#comparison-of-running-times">Comparison of running times</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+</aside>
+        </div>
+        <div class="btn">
+    <div class="btn-menu" id="btn-menu">
+        <i class="iconfont icon-grid-sharp"></i>
+    </div>
+    <div class="btn-toggle-mode">
+        <i class="iconfont icon-contrast-sharp"></i>
+    </div>
+    <div class="btn-scroll-top">
+        <i class="iconfont icon-chevron-up-circle-sharp"></i>
+    </div>
+</div>
+<aside class="sidebar-mobile" style="display: none;">
+  <div class="sidebar-wrapper">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/dsrkafuu" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+            <li>
+                <a href="https://twitter.com/dsrkafuu" target="_blank"><span>Twitter</span></a>
+            </li>
+            
+            <li>
+                <a href="https://space.bilibili.com/19767474" target="_blank"><span>bilibili</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/mathematical-analysis/">Mathematical Analysis</a>
+            </span>
+            
+            <span>
+                <a href="/tags/probability/">Probability</a>
+            </span>
+            
+            <span>
+                <a href="/tags/programming-in-r/">Programming in R</a>
+            </span>
+            
+            <span>
+                <a href="/tags/regression/">Regression</a>
+            </span>
+            
+        </div>
+    </div>
+    
+    
+    
+    <div class="sidebar-item sidebar-toc">
+        <h3>TOC</h3>
+        <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#how-to-list-the-files-in-a-given-directory">How to list the files in a given directory?</a></li>
+        <li><a href="#examining-five-approaches">Examining five approaches</a></li>
+        <li><a href="#comparison-of-running-times">Comparison of running times</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+    
+    
+  </div>
+</aside>
+    </main>
+
+    
+
+
+
+
+<script>
+window.MathJax = {
+    options: {
+        renderActions: {
+            addMenu: []
+        },
+        skipHtmlTags: ["script", "style", "textarea", "pre", "code"],   
+        includeHtmlTags: {br: '\n', wbr: '', '#comment': ''},   
+    },
+    loader: {
+        load: ['[tex]/tagFormat']
+    },
+    tex: {
+        inlineMath: [ ["$","$"] ],
+        displayMath: [ ["$$","$$"] ],
+        processEscapes: false,
+        packages: {'[+]': ['tagFormat']},
+        digits: /^(?:[\d۰-۹]+(?:[,٬'][\d۰-۹]{3})*(?:[\.\/٫][\d۰-۹]*)?|[\.\/٫][\d۰-۹]+)/,    
+        tagSide: "right",
+        tagIndent: ".8em",
+        multlineWidth: "85%",
+        
+        
+        tagFormat: {
+            number: function(n){
+                return String(n)
+                        .replace(/0/g,"۰")
+                        .replace(/1/g,"۱")
+                        .replace(/2/g,"۲")
+                        .replace(/3/g,"۳")
+                        .replace(/4/g,"۴")
+                        .replace(/5/g,"۵")
+                        .replace(/6/g,"۶")
+                        .replace(/7/g,"۷")
+                        .replace(/8/g,"۸")
+                        .replace(/9/g,"۹");
+            }
+        }
+    },
+    svg: {
+        fontCache: 'global',        
+        mtextInheritFont: true,     
+        scale: 0.97,                
+        minScale: 0.6               
+    }
+};
+</script>
+<script id="MathJax-script" async
+   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+
+    <footer>
+    <div class="container-lg clearfix">
+        <div class="col-12 footer">
+            
+            <span>&copy; 2020-2021
+                <a href="/">Evgeni Ovcharov</a>
+                 | <a href="https://github.com/itsme/my_blog">Source code</a> 
+                | Powered by <a href="https://github.com/dsrkafuu/hugo-theme-fuji/"
+                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
+                                                    target="_blank">Hugo</a> 
+            </span>
+        </div>
+    </div>
+</footer>
+
+    
+<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.0/lazysizes.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+
+
+<script defer src="/assets/js/fuji.min.js"></script>
+
+
+</body>
+
+</html>

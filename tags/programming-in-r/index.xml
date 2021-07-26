@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Programming in R on Blog on Data Science</title>
+    <link>/tags/programming-in-r/</link>
+    <description>Recent content in Programming in R on Blog on Data Science</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 24 Aug 2019 00:00:00 +0000</lastBuildDate><atom:link href="/tags/programming-in-r/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Reading multiple csv files in R</title>
+      <link>/post/2019-08-21-reading-csv-files/</link>
+      <pubDate>Sat, 24 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2019-08-21-reading-csv-files/</guid>
+      <description>Comma-separated value (csv) files are one of the most common file formats used in data analysis today. Sometimes we need to read multiple csv files from disk and combine them into a single data frame or data table object in R. We shall explore five different approaches to that task and determine the most efficient one. First, let us make sure that we know how to answer the following question:
+How to list the files in a given directory? The function list.files() lists all files in a given directory whose names contain a specific character pattern. An example of its use can be the following:
+list.files(path = &amp;quot;./csv/&amp;quot;, pattern = &amp;quot;^f.*199&amp;quot;, full.names = TRUE)[1] &amp;quot;./csv/football-results-1998.csv&amp;quot; &amp;quot;./csv/football-results-1999.csv&amp;quot; The output is a character vector giving the names of the files matching the search criterion.</description>
+    </item>
+    
+  </channel>
+</rss>

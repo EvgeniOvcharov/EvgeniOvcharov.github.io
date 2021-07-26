@@ -16,7 +16,7 @@
 
 
 
-<title>Blog on Data Science - Mathematics. Statistics. Algorithms.</title>
+<title>Probability - Blog on Data Science</title>
 
 
 <meta name="author" content="Evgeni Ovcharov" />
@@ -26,12 +26,12 @@
 
 
 
-<meta property="og:title" content="Blog on Data Science" />
-<meta name="twitter:title" content="Blog on Data Science" />
+<meta property="og:title" content="Probability" />
+<meta name="twitter:title" content="Probability" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="/" /><meta property="og:image" content="/img/og.png" />
+<meta property="og:url" content="/tags/probability/" /><meta property="og:image" content="/img/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="/img/og.png" /><meta property="og:updated_time" content="2021-03-02T00:00:00+00:00" />
+<meta name="twitter:image" content="/img/og.png" /><meta property="og:updated_time" content="2018-08-28T00:00:00+00:00" />
 
 
 <style>
@@ -87,36 +87,11 @@
             <div class="col-12 col-md-9 float-left content">
                 
 
-
-
-<div class="post">
-    <h2 class="post-item post-title">
-        <a href="/post/lection-1/">Лекция 1  Защо има нужда от рейтингови системи в спорта?</a>
-    </h2>
-    <div class="post-item post-meta">
-        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2021-03-02</span><span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;2446 words</span><span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;No tag</span>
-
-    </div>
-    <div class="post-item post-summary markdown-body">
-        Един от най-интригуващите аспекти в спортните състезания са противоречивите оценки, които фенове и състезатели дават за представянето на участниците. Отговорът на въпроса как да се определи най-добрият състезател или отбор е по-труден отколкото изглежда на пръв поглед. Това се дължи на факта, че освен уменията на участниците случайността също играе роля в определянето на спортните резултати. Казано по-просто в един спортен мач не винаги побеждава по-силният отбор. Към оформянето на спортните резултати, често се наслагва субективност в преценките на съдиите и организаторите на спортните събития. Как да се отстранят случайността и субективизма при оценяването на състезателите? За да се направи това е необходимо да се въведат безпристрастни критерии и алгоритми почиващи на здрави вероятностни и математически основи.
-Първите опити за оценяване на представянето на състезателите се базират на системи за натрупване на точки, или точкови системи за кратко.
-    </div>
+<div class="page-info">
+    <span>Posts with the tag Probability: </span>
 </div>
 
-<div class="post">
-    <h2 class="post-item post-title">
-        <a href="/post/2019-08-21-reading-csv-files/">Reading multiple csv files in R</a>
-    </h2>
-    <div class="post-item post-meta">
-        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2019-08-24</span><span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;831 words</span><span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/programming-in-r">Programming in R</a>&nbsp;</span>
 
-    </div>
-    <div class="post-item post-summary markdown-body">
-        Comma-separated value (csv) files are one of the most common file formats used in data analysis today. Sometimes we need to read multiple csv files from disk and combine them into a single data frame or data table object in R. We shall explore five different approaches to that task and determine the most efficient one. First, let us make sure that we know how to answer the following question:
-How to list the files in a given directory? The function list.files() lists all files in a given directory whose names contain a specific character pattern. An example of its use can be the following:
-list.files(path = &quot;./csv/&quot;, pattern = &quot;^f.*199&quot;, full.names = TRUE)[1] &quot;./csv/football-results-1998.csv&quot; &quot;./csv/football-results-1999.csv&quot; The output is a character vector giving the names of the files matching the search criterion.
-    </div>
-</div>
 
 <div class="post">
     <h2 class="post-item post-title">
@@ -154,41 +129,6 @@ defined on some probability space $(\Omega, \mathcal A, \operatorname P)$. We li
 
 <div class="post">
     <h2 class="post-item post-title">
-        <a href="/post/2018-08-18-computing-integral/">Computing an Integral</a>
-    </h2>
-    <div class="post-item post-meta">
-        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2018-08-23</span><span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;289 words</span><span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/mathematical-analysis">Mathematical Analysis</a>&nbsp;</span>
-
-    </div>
-    <div class="post-item post-summary markdown-body">
-        Problem Compute the integral
-$$ I = \int_0^\infty \frac 1 {1+x^4} dx. $$
-Answer  This seems to be a popular problem illustrating various mathematical techniques. The standard approach is to use complex analysis and the Cauchy method of residues. The problem may be solved with more elementary techniques by using a series of clever substitutions. Both approaches rely on quite lengthy computations to obtain the answer
-$$ I = \pi \frac {\sqrt 2} 4. $$
-Here, we would like to show that the answer may be obtained quite easily in the form of power series.
-Power series solution We write
-$$ I = \int_0^1 \frac 1 {1+x^4} dx + \int_1^\infty \frac 1 {1+x^4} dx = I_1 + I_2. $$
-    </div>
-</div>
-
-<div class="post">
-    <h2 class="post-item post-title">
-        <a href="/post/2018-08-16-regression-coefficients/">Unbiasedness and Consistency of the Regression Coefficients</a>
-    </h2>
-    <div class="post-item post-meta">
-        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2018-08-16</span><span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;1075 words</span><span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/regression">Regression</a>&nbsp;</span>
-
-    </div>
-    <div class="post-item post-summary markdown-body">
-        Here we consider the basic asymptotic properties of the coefficient estimators in a simple linear regression. Many readers when first acquainted with the subject stay under the expression that this is a rather tedious and technical matter. In what follows, we would like to show that when approached from the right perspective, the subject becomes rather intuitive and clear.
-Derivation of the estimators We consider a simple linear regression model
-$$ Y = \beta_0 + \beta_1 X + \epsilon, $$
-where $X$ and $Y$ are random variables, $\beta_0$, $\beta_1$ are constants and $\epsilon$ is the random error. We assume that the observations $(x_1,y_1), \dots, (x_n,y_n)$ are independently and identically distributed. In the ordinary least squares (OLS) method, we want to minimize the mean squared error
-    </div>
-</div>
-
-<div class="post">
-    <h2 class="post-item post-title">
         <a href="/post/2018-07-20-vector-independence/">Are two random vectors independent if their components are pairwise independent?</a>
     </h2>
     <div class="post-item post-meta">
@@ -216,20 +156,6 @@ where the $\operatorname{mod} 1$ operation means that we identify all integer va
 Introduction Often in mathematics we have to deal with recurrence relations. One of the best known examples of recurrence relations is the Fibonacci numbers given by the relation
 $$ {\displaystyle F_{n}=F_{n-1}+F_{n-2}}, $$
 with initial conditions ${\displaystyle F_{0}=1}, {\displaystyle F_{1}=1.}$ The Fibonacci sequence appeared in 1202 in the book *Liber Abaci* by the Italian mathematician Leonardo of Pisa, also known today as Fibonacci, where he tries to model the population growth of an idealized pair of newborn rabbits.
-    </div>
-</div>
-
-<div class="post">
-    <h2 class="post-item post-title">
-        <a href="/post/open_dota_api/">The Open Dota API</a>
-    </h2>
-    <div class="post-item post-meta">
-        <span><i class="iconfont icon-today-sharp"></i>&nbsp;0001-01-01</span><span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;1292 words</span><span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;No tag</span>
-
-    </div>
-    <div class="post-item post-summary markdown-body">
-        In this tutorial, we are going to show how one can gather data about the esports game Dota 2 from a dedicated site collecting and providing such data. The data will be requested through the web site&rsquo;s API interface documented here: The Open Dota API Documentation. First, we&rsquo;re going to cover the basics of accessing an API using the R programming language.
-APIs allow programmers to request data directly from certain websites through what&rsquo;s called an Application Programming Interface. When a website sets up an API, they are essentially setting up a computer that waits for data requests. Once this computer receives a data request, it will do its own processing of the data and send it to the computer that requested it.
     </div>
 </div>
 

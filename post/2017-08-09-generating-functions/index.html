@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="HandheldFriendly" content="True" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="generator" content="Hugo 0.80.0" />
+
+
+<link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/dsrkafuu/dsr-cdn@1/images/favicons/dsrca/favicon.ico" />
+
+
+
+<title>Solving Recurrence Relations with Generating Functions - Blog on Data Science</title>
+
+
+<meta name="author" content="Evgeni Ovcharov" />
+
+
+<meta name="description" content="A minimal Hugo theme with nice theme color." />
+
+
+<meta name="keywords" content="Probability" />
+
+
+<meta property="og:title" content="Solving Recurrence Relations with Generating Functions" />
+<meta name="twitter:title" content="Solving Recurrence Relations with Generating Functions" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/2017-08-09-generating-functions/" /><meta property="og:description" content="&ldquo;A generating function is a device somewhat similar to a bag. Instead of carrying many little objects detachedly, which could be embarrassing, we put them all in a bag, and then we have only one object to carry, the bag.&rdquo; &ndash; George Polya, Mathematics and plausible reasoning (1954)
+Introduction Often in mathematics we have to deal with recurrence relations. One of the best known examples of recurrence relations is the Fibonacci numbers given by the relation
+$$ {\displaystyle F_{n}=F_{n-1}&#43;F_{n-2}}, $$
+with initial conditions ${\displaystyle F_{0}=1}, {\displaystyle F_{1}=1.}$ The Fibonacci sequence appeared in 1202 in the book *Liber Abaci* by the Italian mathematician Leonardo of Pisa, also known today as Fibonacci, where he tries to model the population growth of an idealized pair of newborn rabbits." />
+<meta name="twitter:description" content="&ldquo;A generating function is a device somewhat similar to a bag. Instead of carrying many little objects detachedly, which could be embarrassing, we put them all in a bag, and then we have only one object to carry, the bag.&rdquo; &ndash; George Polya, Mathematics and plausible reasoning (1954)
+Introduction Often in mathematics we have to deal with recurrence relations. One of the best known examples of recurrence relations is the Fibonacci numbers given by the relation
+$$ {\displaystyle F_{n}=F_{n-1}&#43;F_{n-2}}, $$
+with initial conditions ${\displaystyle F_{0}=1}, {\displaystyle F_{1}=1.}$ The Fibonacci sequence appeared in 1202 in the book *Liber Abaci* by the Italian mathematician Leonardo of Pisa, also known today as Fibonacci, where he tries to model the population growth of an idealized pair of newborn rabbits." /><meta property="og:image" content="/img/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="/img/og.png" /><meta property="article:published_time" content="2017-08-09T00:00:00+00:00" /><meta property="article:modified_time" content="2017-08-09T00:00:00+00:00" />
+
+
+<style>
+    @media (prefers-color-scheme: dark) {
+        body[data-theme='auto'] img {
+            filter: brightness(60%);
+        }
+    }
+
+    body[data-theme='dark'] img {
+        filter: brightness(60%);
+    }
+</style>
+
+
+
+<link rel="stylesheet" href="/assets/css/fuji.min.css" />
+
+
+
+
+
+</head>
+
+<body data-theme="auto">
+    <script data-cfasync="false">
+  
+  var fujiThemeData = localStorage.getItem('fuji_data-theme');
+  
+  if (!fujiThemeData) {
+    localStorage.setItem('fuji_data-theme', 'auto');
+  } else {
+    
+    if (fujiThemeData !== 'auto') {
+      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
+    }
+  }
+</script>
+    <header>
+    <div class="container-lg clearfix">
+        <div class="col-12 header">
+            <a class="title-main" href="/">Blog on Data Science</a>
+            
+            <span class="title-sub">Mathematics. Statistics. Algorithms.</span>
+            
+        </div>
+    </div>
+</header>
+
+    <main>
+        <div class="container-xl clearfix">
+            
+            <div class="col-12 col-md-9 float-left content">
+                
+<article>
+    
+    <h2 class="post-item post-title">
+        <a href="/post/2017-08-09-generating-functions/">Solving Recurrence Relations with Generating Functions</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2017-08-09</span><span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;2212 words</span><span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/probability">Probability</a>&nbsp;</span>
+
+    </div>
+    
+    <div class="post-content markdown-body">
+        <p><em>&ldquo;A generating function is a device somewhat similar to a bag. Instead of carrying many little objects detachedly, which could be embarrassing, we put them all in a bag, and then we have only one object to carry, the bag.&rdquo; &ndash; George Polya, Mathematics and plausible reasoning (1954)</em></p>
+<h3 id="introduction">Introduction</h3>
+<p>Often in mathematics we have to deal with recurrence relations. One of the best known examples of recurrence relations is the <em>Fibonacci numbers</em> given by the relation</p>
+<p>$$
+{\displaystyle F_{n}=F_{n-1}+F_{n-2}},
+$$</p>
+<p>with initial conditions ${\displaystyle F_{0}=1}, {\displaystyle F_{1}=1.}$ The Fibonacci sequence appeared in 1202 in the book *Liber Abaci* by the Italian mathematician Leonardo of Pisa, also known today as Fibonacci, where he tries to model the population growth of an idealized pair of newborn rabbits. The author supposes that in the beginning of each new month the number of rabbit pairs will be equal to their number $F_{n-1}$ a month ago plus the newborn pairs of rabbits, which would be equal to the number of rabbit pairs that were born two or more months ago, or $F_{n-2}$.</p>
+<p>We present below an interesting and nontrivial mathematical problem about recurrence relations. The problem illustrates the rich mathematical theory of the subject and in particular the application of generating functions to study the solutions of recurrence relations.</p>
+<h3 id="problem">Problem</h3>
+<p>Consider a random number sequence $S_n$ generated by the relation</p>
+<p>$$
+\begin{aligned}
+S_{n+1} = S_n + X, \quad S_0 = 0, \quad n = 0,1, \dots,
+\end{aligned}
+$$</p>
+<p>where $X$ is a random variable taking any value with equal probability from a given set of natural numbers $\mathcal X = \{n_1, n_2, &hellip;, n_m\}$. Let $p_k$ be the probability that the sequence $S_n$ will contain a given number $k$. Determine $p_k$ asymptotically in the form $p_k = \pi + o(1)$, where $\pi = \pi(\mathcal X)$ should be given explicitly.</p>
+<!--
+show that $p_N$ is in the form $p_N = p + o(1)$ for some $p\in[0,1]$ and some $o(1)$ as $N\rightarrow\infty$, and find $p$.
+-->
+<h3 id="motivational-example">Motivational example</h3>
+<p>In the simplest case where $\mathcal X = \{1,2\}$, $p_n$ may be found explicitly to be</p>
+<p>$$
+p_n = \frac 2 3 + \frac {(-1)^n }{2^{n} 3},
+$$</p>
+<p>for $n\geq 1$, see below. Indeed, for $n=1$ the formula gives $p_1 = 1/2$, which is correct as we may reach $n=1$ starting from $n=0$ only if $X=1$. For $n=2$ the formula gives $p_2 = 3/4$. This is also correct as all possible pairs of values of $X$ are: $(1,1)$, $(1,2)$, $(2,1)$, and $(2,2)$. Of these, only the pair $(1,2)$ misses $n=2$ starting from $n=0$. Hence $n=2$ can be reached in 3 out of 4 ways, or $p_2=3/4$. We may continue computing $p_3$, $p_4$, $\dots$ seeking for a pattern. And such a pattern readily emerges in the form of a recurrence relation between the probabilities $p_n$, $p_{n-1}$, $p_{n-2}$ given by</p>
+<p>$$
+p_n = \frac{p_{n-1} + p_{n-2}} 2.
+$$</p>
+<p>Indeed, the sequence may reach the number $n$ only if it undergoes the following two transitions with regard to its previous state: either from $n-1$ to $n$ or from $n-2$ to $n$. The first transition happens with probability $p_{n-1}/2$ and the second transition happens with probability $p_{n-2}/2$. The reader may notice that this recurrence relation looks similarly to the Fibonacci recurrence relation, however, the generated sequences have vastly different asymptotic properties.</p>
+<p>Before we begin with the solution, we need to revise some basic facts.</p>
+<h3 id="linear-recurrence-relations-with-constant-coefficients">Linear recurrence relations with constant coefficients</h3>
+<p>A <em>linear recurrence relation</em> is an equation of the form</p>
+<p>$$\tag{1}
+x_n = c_1 x_{n-1} + c_2 x_{n-2} + \cdots + c_k x_{n-k}
+$$</p>
+<p>that defines the $n$-th term in a number sequence $x_n$ in terms of the $k$ previous terms in the sequence. The coefficients $c_i$ are all assumed to be constants. If $c_k\not= 0$, the relation is said to be of order $k$. The recurrence relation here is called <em>linear</em> because all the terms in the sequence appear as first-order polynomials. This relation is also called <em>homogenous</em> because there is no constant term appearing in the equation. For example, the Fibonacci sequence is a linear homogeneous recurrence relation with constant coefficients of order 2. We briefly recall the main methods for solving linear recurrence relations with constant coefficients.</p>
+<h3 id="characteristic-polynomial">Characteristic polynomial</h3>
+<p>The simplest recurrence relation is the first-order relation $x_n = r x_{n-1}$, $x_0=a$. Its solution is immediately seen to be $x_n=ar^n$. Looking for solutions of the general $k$-th order relation $(1)$ in the same form leads us to consider the roots of the polynomial</p>
+<p>$$\tag{2}
+r^n - c_1 r^{n-1} - c_2 r^{n-2} - \cdots - c_k r^{n-k},
+$$</p>
+<p>called the <em>characteristic polynomial</em> of the recurrence relation $(1)$. The distinct roots $r_i$ of that polynomial induce solutions of the recurrence relation in the form $x_n = a_i r_i^n$, where $a_i$ are some constants. If $r$ is a repeated root of multiplicity $l$, then the solutions corresponding to that root have the general form</p>
+<p>$$
+x_n = a_0 r^n + a_1 n r^n + \cdots a_{l-1} n^{l-1} r^n,
+$$</p>
+<p>for some constants $a_0$, $\dots$, $a_{l-1}$. Since any polynomial of degree $k$ has $k$ roots counted with multiplicity, the roots of the characteristic polynomial always give us the full set of $k$ linearly independent solutions. The unspecified constants appearing in the general form of the solutions may be determined from the values of the first $k$ members of the recurrence relation.</p>
+<h3 id="generating-functions">Generating functions</h3>
+<p>Sometimes finding the roots of the characteristic polynomial explicitly may not be feasible, especially if the polynomial is of degree higher than 2. Suppose, for example, that we want to show that a sequence $x_n$ generated by $(1)$ converges to some limit $L$ as $n\rightarrow \infty$. Such a limit would exist in the first place only if all the roots of $(2)$ are in absolute value less than one, possibly with the exception of one root of multiplicity one which may be equal to one. If this is the case, $x_n$ would be of the form $x_n = L + o(1)$, where by $o(1)$ we have denoted terms which tend to zero as $n\rightarrow\infty$. Determining $L$ from the initial conditions, however, might be a nontrivial task as obtaining all the roots of the characteristic polynomial explicitly cannot be done easily for degrees higher than two. In this case, the method of <em>generating functions</em> is indispensable.</p>
+<p>The <em>generating function</em> of a number sequence $a_n$ is a function of the form</p>
+<p>$$
+G(a_n;x)=\sum_{n=0}^\infty a_nx^n.
+$$</p>
+<p>If $a_n=p_n$ is the probability mass function of a discrete random variable $X$ taking values in the non-negative integers ${0,1, &hellip;}$, then its generating function is called the <em>probability generating function</em> of $X$.</p>
+<!---
+Using the probability generating function of $X$, we may compute the expectation of $X$ in terms of the formula
+
+$$
+\operatorname E X = \sum_{n=0}^\infty n p_n = \lim_{x\rightarrow 1^{-}}\sum_{n=0}^\infty n p_nx^n = G'(p_n;1^-).
+$$
+
+The existence of the limit, either finite or infinite, is guaranteed by Abel's theorem. Generating functions are intimately related to other concepts from probability theory such as the moment generating function and the characteristic function of a random variable, but we shall not pursue this matter any further here.
+-->
+<p>Generating functions were first introduced by Abraham de Moivre in 1730 to study recurrence relations like $(1)$. Generating functions were extensively applied by Euler to study combinatorial and number theory problems in the 1750&rsquo;s. The name generating function was coined by Laplace in connection to what is now known as the Laplace transform and the moment generating function of a random variable.</p>
+<h3 id="examples-of-generating-functions-for-simple-sequences">Examples of generating functions for simple sequences</h3>
+<p>Polynomials are generating functions to finite sequences.</p>
+<p>The constant sequence 1,1,1,$\dots$, is associated with the key generating function,</p>
+<p>$$
+\sum_{n=0}^\infty x^n = \frac 1 {1-x},
+$$</p>
+<p>which is the sum of the geometric series with common ratio $x$.</p>
+<p>The substitution $x \rightarrow ax$ gives the generating function of the geometric sequence $1, a, a^2, a^3, &hellip;$, for any constant $a$,</p>
+<p>$$
+{\displaystyle \sum _{n=0}^{\infty }(ax)^{n}={\frac {1}{1-ax}}.}
+$$</p>
+<p>By squaring the initial generating function, or by finding the derivative of both sides with respect to $x$ and making a change of running variable $n \rightarrow n+1$, we get the generating function,</p>
+<p>$$
+{\displaystyle \sum _{n=0}^{\infty }(n+1)x^{n}={\frac {1}{(1-x)^{2}}},}
+$$</p>
+<p>of the sequence $a_n = n+1$. More generally, for any non-negative integer $k$ and non-zero real value $a$, it is true that</p>
+<p>$$
+{\displaystyle \sum _{n=0}^{\infty }a^{n}{\binom {n+k}{k}}x^{n}={\frac {1}{(1-ax)^{k+1}}},.}
+$$</p>
+<p>Note that, since</p>
+<p>$$
+{\displaystyle 2{\binom {n+2}{2}}-3{\binom {n+1}{1}}+{\binom {n}{0}}=2{\frac {(n+1)(n+2)}{2}}-3(n+1)+1=n^{2},}
+$$</p>
+<p>we may find the generating function for the sequence $a_n=n^2$ of square numbers as a sum of more elementary generating functions</p>
+<p>$$
+{\displaystyle {\begin{aligned}G(n^{2};x)&amp;=\sum _{n=0}^{\infty }n^{2}x^{n}={\frac {2}{(1-x)^{3}}}-{\frac {3}{(1-x)^{2}}}+{\frac {1}{1-x}}={\frac {x(x+1)}{(1-x)^{3}}}.\end{aligned}}}
+$$</p>
+<h3 id="basic-properties-of-generating-functions">Basic properties of generating functions</h3>
+<p>The generating function of a number sequence can be expressed as a rational function (the ratio of two finite-degree polynomials) if and only if the sequence is generated by a linear recurrence relation with constant coefficients.</p>
+<p>For the next property of generating functions let us recall the <em>Cauchy product</em> of two infinite sequences. If $a_i$ and $b_i$ are two infinite number sequences, the Cauchy product of the associated power series is defined as follows:</p>
+<p>$$
+{\displaystyle \left(\sum_{i=0}^{\infty }a_{i}x^i\right)\cdot \left(\sum_{j=0}^{\infty }b_{j}x^j\right)=\sum_{k=0}^{\infty }c_{k}x^k} \quad   \text{where} \quad  {\displaystyle c_{k}=\sum_{l=0}^{k}a_{l}b_{k-l}}.
+$$</p>
+<p>The sequence $c_i$ is the called the Cauchy product of the sequences $a_i$ and $b_i$, or also the <em>discrete convolution</em> of $a_i$ and $b_i$. Thus, the product of two generating functions is the generating function of the Cauchy product of the associated sequences.</p>
+<p>For example, the sequence of cumulative sums ${\displaystyle (a_{0},a_{0}+a_{1},a_{0}+a_{1}+a_{2},\cdots )}$ of a sequence with generating function $G(a_n; x)$ has the generating function</p>
+<p>$$
+{\displaystyle G(a_{n};x){\frac {1}{1-x}}}.
+$$</p>
+<p>Shifting sequence indices by $m$ steps to the right or $m$ steps to the left yields the following identities:</p>
+<p>$$ \begin{aligned} x^{m}G(a_n; x) &amp;=  \sum_{n\geq m}a_{n-m}x^{n}=G(a_{n-m}; x) \\ \frac { G(a_n;x)-a_{0}-a_{1}x-\cdots -a_{m-1}x^{m-1}} {x^{m}}   &amp;=  \sum_{n\geq 0}a_{n+m}x^{n}=G(a_{n+m}; x), \end{aligned} $$</p>
+<p>where $a_{-1}, \dots, a_{-m}$ are all set to zero.</p>
+<!---
+Differentiation and integration of generating functions yields the following identities:
+
+$$
+{\displaystyle {\begin{aligned}
+G^{\prime }(a_n;x)             &=\sum _{n\geq 0}(n+1) a_{n+1}x^{n}\\
+xG^{\prime }(a_n;x)      &=\sum _{n\geq 0}n a_{n}x^{n}\\
+\int _{0}^{x}G(a_n;t)dt        &=\sum _{n\geq 1}{\frac {a_{n-1}}{n}}x^{n}.
+\end{aligned}}}
+$$
+-->
+<h3 id="solution-of-the-problem">Solution of the problem</h3>
+<p>First, without loss of generality we may assume that the numbers $n_1$, $\dots$, $n_m$ are relative prime. Indeed, if $d \geq 1$ is their greatest common divisor then $S_n$ will traverse only the numbers ${d, 2d, 3d, \dots}$ as $S_n$ and $X$ will be divisible by $d$. Then we may write $X=dX'$, where $X'$ is a new random variable taking values in the set $\mathcal X' = {n_1/d, n_2/d, &hellip;, n_m/d}$. Then writing $S_n=dS_n'$, it is clearly enough to consider the problem only for the sequence $S_n'$.</p>
+<p>Suppose that the elements of the set $\mathcal X$ are given in ascending order: $n_1 \leq n_2 \leq \cdots \leq n_m$. If $p_n$ is the probability the sequence $S_n$ to contain $n$ for any $n\geq0$, then we have the recurrence relation</p>
+<p>$$ \tag{3}
+p_{n} = \frac {p_{n-n_1} + p_{n-n_2}  + \cdots + p_{n-n_m}} m,
+$$</p>
+<p>for $n \geq n_m$. The values of $p_0, p_1, \dots, p_{n_m-1}$ represent the initial conditions of the recurrence relation, fully determining the corresponding sequence. These conditions are given by $p_0 = 1$ and by $(3)$ for $n = 1, \dots, n_{m}-1$ by defining $p_n=0$, for $n&lt;0$. If $g(x) = p_0 + p_1 x + p_2 x^2 + \cdots$ is the generating function of the sequence $p_n$, then we have the identity</p>
+<p>$$
+g(x) = \frac{x^{n_1}g(x) + x^{n_{2}}g(x) + \cdots + x^{n_m}g(x)} m +1.
+$$</p>
+<p>Indeed, this follows immediately from $(3)$ for all $p_n$ with $n \geq 1$. Since $p_n$ does not satisfy $(3)$ only for $n=0$, we need to make a simple correction for it. Solving for $g$, we obtain</p>
+<p>$$\tag{4}
+g(x) = \frac {m} {m -  (x^{n_{1}} + x^{n_{2}} \cdots + x^{n_m})} = \frac 1 {1-s(x)},
+$$</p>
+<p>where apparently $s(x)=(x^{n_{1}} + x^{n_{2}} \cdots + x^{n_m}) / m$ is the probability generating function of the random variable $X$.</p>
+<p>We continue by noticing that $g(x)$ has a unique pole at $x=1$. If we can show that</p>
+<p>$$
+g(x) = \frac {C} {1 - x} + f(x),
+$$</p>
+<p>where $C$ is a suitable constant and $f(x)$ is analytic around $x=1$, then it would follow that $p_n = C + o(1)$ as $n\rightarrow\infty$. Indeed, the Taylor coefficients of analytic functions around $x=1$ must tend to zero as $n\rightarrow\infty$. Expanding the function $1-s(x)$ in a Taylor series around $x=1$, we obtain</p>
+<p>$$
+1 - s(x) = -\mu(x-1) - \mu (x-1)^2 r(x),
+$$</p>
+<p>where $\mu = (n_1+n_2+\cdots+n_m)/m = \operatorname E X$ and $r(x)$ is some analytic function around $x=1$. It follows that</p>
+<p>$$
+g(x) = \frac 1 {\mu} \frac 1 {1 - x}\frac 1 {1-(1-x)r(x)} = \frac 1 {\mu} \frac 1 {1 - x}\left(1+(1-x)r(x) + (1-x)^2r^2(x)+\cdots\right).
+$$</p>
+<p>Thus, $g(x)$ has the desired form with $C=1/\mu$ and $f(x) = (r(x) + (1-x)r^2(x) + \cdots)/\mu$. Hence, we conclude that</p>
+<p>$$
+p_n = \frac 1 {\operatorname E X} + o(1)\quad \text{as} \quad n\rightarrow\infty.
+$$</p>
+<h3 id="exercise-1">Exercise 1</h3>
+<p>To illustrate the method with the characteristic polynomial, let us consider the above problem in the particular case of $\mathcal X=\{1,2\}$. Now the characteristic equation is given by</p>
+<p>$$
+2x^2 = x + 1.
+$$</p>
+<p>Its roots are $1$ and $-1/2$. We see that $p_n$ is in the form $\displaystyle{p_n = 1^n a  + (-1)^n{2^{-n}}b}$, where $a$ and $b$ are some constants to be determined. We have</p>
+<p>$$ \begin{aligned} p_0 &amp;= a + b= 1\\ p_1 &amp;= a - b/2 = 1/2. \end{aligned} $$</p>
+<p>From here $a=2/3$, $b=1/3$. Thus, we obtain</p>
+<p>$$
+p_n = \frac 2 3 + \frac {(-1)^n }{2^{n} 3},
+$$</p>
+<p>showing that $p_n\rightarrow 2/3$ as $n\rightarrow\infty$.</p>
+<h3 id="exercise-2">Exercise 2</h3>
+<p>We again consider the above problem in the particular case of $\mathcal X=\{1,2\}$, but this time in terms of the generating function. In view of $(4)$, we now have $g(x) = {2} / (2-x-x^2)$. The roots of the polynomial $2-x-x^2$ are $1$ and $-2$. We write</p>
+<p>$$
+g(x) = \frac {1} {(1-x)(1+\frac x 2)} = (1+x+x^2+\cdots)(1-\frac x 2 + \frac {x^2} 4 - \cdots).
+$$</p>
+<p>Hence,</p>
+<p>$$
+p_n = 1 - \frac 1 2 + \cdots + (-1)^n \frac 1 {2^n} = \frac 2 3(1 - (-1)^{n+1}\frac 1 {2^{n+1}})  = \frac 2 3 + \frac {(-1)^n }{2^{n} 3}.
+$$</p>
+
+    </div>
+</article>
+
+
+<div class="license markdown-body">
+    <blockquote>
+        <p>Unless otherwise noted, the content of this site is licensed under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"
+               target="_blank">CC BY-NC-SA 4.0</a>.</p>
+    </blockquote>
+</div>
+
+
+
+            </div>
+            <aside class="col-12 col-md-3 float-left sidebar">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/dsrkafuu" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+            <li>
+                <a href="https://twitter.com/dsrkafuu" target="_blank"><span>Twitter</span></a>
+            </li>
+            
+            <li>
+                <a href="https://space.bilibili.com/19767474" target="_blank"><span>bilibili</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/mathematical-analysis/">Mathematical Analysis</a>
+            </span>
+            
+            <span>
+                <a href="/tags/probability/">Probability</a>
+            </span>
+            
+            <span>
+                <a href="/tags/programming-in-r/">Programming in R</a>
+            </span>
+            
+            <span>
+                <a href="/tags/regression/">Regression</a>
+            </span>
+            
+        </div>
+    </div>
+    <div class="sidebar-item sidebar-toc">
+        <h3>TOC</h3><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#introduction">Introduction</a></li>
+        <li><a href="#problem">Problem</a></li>
+        <li><a href="#motivational-example">Motivational example</a></li>
+        <li><a href="#linear-recurrence-relations-with-constant-coefficients">Linear recurrence relations with constant coefficients</a></li>
+        <li><a href="#characteristic-polynomial">Characteristic polynomial</a></li>
+        <li><a href="#generating-functions">Generating functions</a></li>
+        <li><a href="#examples-of-generating-functions-for-simple-sequences">Examples of generating functions for simple sequences</a></li>
+        <li><a href="#basic-properties-of-generating-functions">Basic properties of generating functions</a></li>
+        <li><a href="#solution-of-the-problem">Solution of the problem</a></li>
+        <li><a href="#exercise-1">Exercise 1</a></li>
+        <li><a href="#exercise-2">Exercise 2</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+</aside>
+        </div>
+        <div class="btn">
+    <div class="btn-menu" id="btn-menu">
+        <i class="iconfont icon-grid-sharp"></i>
+    </div>
+    <div class="btn-toggle-mode">
+        <i class="iconfont icon-contrast-sharp"></i>
+    </div>
+    <div class="btn-scroll-top">
+        <i class="iconfont icon-chevron-up-circle-sharp"></i>
+    </div>
+</div>
+<aside class="sidebar-mobile" style="display: none;">
+  <div class="sidebar-wrapper">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/dsrkafuu" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+            <li>
+                <a href="https://twitter.com/dsrkafuu" target="_blank"><span>Twitter</span></a>
+            </li>
+            
+            <li>
+                <a href="https://space.bilibili.com/19767474" target="_blank"><span>bilibili</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/mathematical-analysis/">Mathematical Analysis</a>
+            </span>
+            
+            <span>
+                <a href="/tags/probability/">Probability</a>
+            </span>
+            
+            <span>
+                <a href="/tags/programming-in-r/">Programming in R</a>
+            </span>
+            
+            <span>
+                <a href="/tags/regression/">Regression</a>
+            </span>
+            
+        </div>
+    </div>
+    
+    
+    
+    <div class="sidebar-item sidebar-toc">
+        <h3>TOC</h3>
+        <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#introduction">Introduction</a></li>
+        <li><a href="#problem">Problem</a></li>
+        <li><a href="#motivational-example">Motivational example</a></li>
+        <li><a href="#linear-recurrence-relations-with-constant-coefficients">Linear recurrence relations with constant coefficients</a></li>
+        <li><a href="#characteristic-polynomial">Characteristic polynomial</a></li>
+        <li><a href="#generating-functions">Generating functions</a></li>
+        <li><a href="#examples-of-generating-functions-for-simple-sequences">Examples of generating functions for simple sequences</a></li>
+        <li><a href="#basic-properties-of-generating-functions">Basic properties of generating functions</a></li>
+        <li><a href="#solution-of-the-problem">Solution of the problem</a></li>
+        <li><a href="#exercise-1">Exercise 1</a></li>
+        <li><a href="#exercise-2">Exercise 2</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+    
+    
+  </div>
+</aside>
+    </main>
+
+    
+
+
+
+
+<script>
+window.MathJax = {
+    options: {
+        renderActions: {
+            addMenu: []
+        },
+        skipHtmlTags: ["script", "style", "textarea", "pre", "code"],   
+        includeHtmlTags: {br: '\n', wbr: '', '#comment': ''},   
+    },
+    loader: {
+        load: ['[tex]/tagFormat']
+    },
+    tex: {
+        inlineMath: [ ["$","$"] ],
+        displayMath: [ ["$$","$$"] ],
+        processEscapes: false,
+        packages: {'[+]': ['tagFormat']},
+        digits: /^(?:[\d۰-۹]+(?:[,٬'][\d۰-۹]{3})*(?:[\.\/٫][\d۰-۹]*)?|[\.\/٫][\d۰-۹]+)/,    
+        tagSide: "right",
+        tagIndent: ".8em",
+        multlineWidth: "85%",
+        
+        
+        tagFormat: {
+            number: function(n){
+                return String(n)
+                        .replace(/0/g,"۰")
+                        .replace(/1/g,"۱")
+                        .replace(/2/g,"۲")
+                        .replace(/3/g,"۳")
+                        .replace(/4/g,"۴")
+                        .replace(/5/g,"۵")
+                        .replace(/6/g,"۶")
+                        .replace(/7/g,"۷")
+                        .replace(/8/g,"۸")
+                        .replace(/9/g,"۹");
+            }
+        }
+    },
+    svg: {
+        fontCache: 'global',        
+        mtextInheritFont: true,     
+        scale: 0.97,                
+        minScale: 0.6               
+    }
+};
+</script>
+<script id="MathJax-script" async
+   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+
+    <footer>
+    <div class="container-lg clearfix">
+        <div class="col-12 footer">
+            
+            <span>&copy; 2020-2021
+                <a href="/">Evgeni Ovcharov</a>
+                 | <a href="https://github.com/itsme/my_blog">Source code</a> 
+                | Powered by <a href="https://github.com/dsrkafuu/hugo-theme-fuji/"
+                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
+                                                    target="_blank">Hugo</a> 
+            </span>
+        </div>
+    </div>
+</footer>
+
+    
+<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.0/lazysizes.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+
+
+<script defer src="/assets/js/fuji.min.js"></script>
+
+
+</body>
+
+</html>
