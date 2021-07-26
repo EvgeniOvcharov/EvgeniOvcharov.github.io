@@ -2,27 +2,37 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Blog on Data Science</title>
-    <link>/post/</link>
+    <link>https://evgeniovcharov.github.io/post/</link>
     <description>Recent content in Posts on Blog on Data Science</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 02 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 26 Jul 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://evgeniovcharov.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Making requests to the Open Dota API in R</title>
+      <link>https://evgeniovcharov.github.io/post/2021-07-27-open_dota_api/</link>
+      <pubDate>Mon, 26 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://evgeniovcharov.github.io/post/2021-07-27-open_dota_api/</guid>
+      <description>In this tutorial, we are going to show how one can gather data about the esports game Dota 2 from a dedicated site collecting and providing such data. The data will be requested through the web site&amp;rsquo;s API interface documented here: The Open Dota API Documentation. First, we&amp;rsquo;re going to cover the basics of accessing an API using the R programming language.
+APIs allow programmers to request data directly from certain websites through what&amp;rsquo;s called an Application Programming Interface. When a website sets up an API, they are essentially setting up a computer that waits for data requests. Once this computer receives a data request, it will do its own processing of the data and send it to the computer that requested it.</description>
+    </item>
+    
     <item>
       <title>Лекция 1  Защо има нужда от рейтингови системи в спорта?</title>
-      <link>/post/lection-1/</link>
+      <link>https://evgeniovcharov.github.io/post/lection-1/</link>
       <pubDate>Tue, 02 Mar 2021 00:00:00 +0000</pubDate>
       
-      <guid>/post/lection-1/</guid>
+      <guid>https://evgeniovcharov.github.io/post/lection-1/</guid>
       <description>Един от най-интригуващите аспекти в спортните състезания са противоречивите оценки, които фенове и състезатели дават за представянето на участниците. Отговорът на въпроса как да се определи най-добрият състезател или отбор е по-труден отколкото изглежда на пръв поглед. Това се дължи на факта, че освен уменията на участниците случайността също играе роля в определянето на спортните резултати. Казано по-просто в един спортен мач не винаги побеждава по-силният отбор. Към оформянето на спортните резултати, често се наслагва субективност в преценките на съдиите и организаторите на спортните събития. Как да се отстранят случайността и субективизма при оценяването на състезателите? За да се направи това е необходимо да се въведат безпристрастни критерии и алгоритми почиващи на здрави вероятностни и математически основи.
 Първите опити за оценяване на представянето на състезателите се базират на системи за натрупване на точки, или точкови системи за кратко.</description>
     </item>
     
     <item>
       <title>Reading multiple csv files in R</title>
-      <link>/post/2019-08-21-reading-csv-files/</link>
+      <link>https://evgeniovcharov.github.io/post/2019-08-21-reading-csv-files/</link>
       <pubDate>Sat, 24 Aug 2019 00:00:00 +0000</pubDate>
       
-      <guid>/post/2019-08-21-reading-csv-files/</guid>
+      <guid>https://evgeniovcharov.github.io/post/2019-08-21-reading-csv-files/</guid>
       <description>Comma-separated value (csv) files are one of the most common file formats used in data analysis today. Sometimes we need to read multiple csv files from disk and combine them into a single data frame or data table object in R. We shall explore five different approaches to that task and determine the most efficient one. First, let us make sure that we know how to answer the following question:
 How to list the files in a given directory? The function list.files() lists all files in a given directory whose names contain a specific character pattern. An example of its use can be the following:
 list.files(path = &amp;quot;./csv/&amp;quot;, pattern = &amp;quot;^f.*199&amp;quot;, full.names = TRUE)[1] &amp;quot;./csv/football-results-1998.csv&amp;quot; &amp;quot;./csv/football-results-1999.csv&amp;quot; The output is a character vector giving the names of the files matching the search criterion.</description>
@@ -30,10 +40,10 @@ list.files(path = &amp;quot;./csv/&amp;quot;, pattern = &amp;quot;^f.*199&amp;qu
     
     <item>
       <title>Independence and Cantor&#39;s Diagonal Argument</title>
-      <link>/post/2018-08-28-independence-and-diagonalization/</link>
+      <link>https://evgeniovcharov.github.io/post/2018-08-28-independence-and-diagonalization/</link>
       <pubDate>Tue, 28 Aug 2018 00:00:00 +0000</pubDate>
       
-      <guid>/post/2018-08-28-independence-and-diagonalization/</guid>
+      <guid>https://evgeniovcharov.github.io/post/2018-08-28-independence-and-diagonalization/</guid>
       <description>Let our probability space $(\Omega, \mathcal B, \lambda)$ be the unit interval $\Omega=[0,1]$ with the Borel subsets $\mathcal B$ and the Lebesgue measure $\lambda$. Is it possible to find an infinite sequence of independent and identically distributed random variables $X_1$, $X_2$, $\dots$ of any given distribution supported on this probability space?
 Surprisingly, yes, and the proof relies on a version of Cantor&amp;rsquo;s diagonal argument.
 Proof It is sufficient to find a sequence of independent and uniformly distributed random variables $U_1$, $U_2$, $\dots$, on $[0,1]$. Then if $F$ is any cumulative distribution function, the sequence $X_n = F^{-1}(U_n)$ has the desired property. Thus we proceed to construct the required sequence $U_1$, $U_2$, $\dots$
@@ -42,10 +52,10 @@ In order to apply Cantor&amp;rsquo;s diagonal argument, we first need to write a
     
     <item>
       <title>Complete Convergence and the Zero-One Laws</title>
-      <link>/post/2018-08-24-complete-convergence/</link>
+      <link>https://evgeniovcharov.github.io/post/2018-08-24-complete-convergence/</link>
       <pubDate>Mon, 27 Aug 2018 00:00:00 +0000</pubDate>
       
-      <guid>/post/2018-08-24-complete-convergence/</guid>
+      <guid>https://evgeniovcharov.github.io/post/2018-08-24-complete-convergence/</guid>
       <description>Here we illustrate three of the famous zero-one laws for convergent sequences of random variables. Their names are: the Borel-Cantelli lemma, the second Borel-Cantelli lemma, and Kolmogorov&amp;rsquo;s zero-one law. They are going to help us study the nuances in the relationship between almost sure convergence and complete convergence.
  Suppose we are given an infinite sequence of random variables
 $$ \tag{1}{X_1, X_2, \dots} $$
@@ -56,10 +66,10 @@ defined on some probability space $(\Omega, \mathcal A, \operatorname P)$. We li
     
     <item>
       <title>Computing an Integral</title>
-      <link>/post/2018-08-18-computing-integral/</link>
+      <link>https://evgeniovcharov.github.io/post/2018-08-18-computing-integral/</link>
       <pubDate>Thu, 23 Aug 2018 00:00:00 +0000</pubDate>
       
-      <guid>/post/2018-08-18-computing-integral/</guid>
+      <guid>https://evgeniovcharov.github.io/post/2018-08-18-computing-integral/</guid>
       <description>Problem Compute the integral
 $$ I = \int_0^\infty \frac 1 {1+x^4} dx. $$
 Answer  This seems to be a popular problem illustrating various mathematical techniques. The standard approach is to use complex analysis and the Cauchy method of residues. The problem may be solved with more elementary techniques by using a series of clever substitutions. Both approaches rely on quite lengthy computations to obtain the answer
@@ -71,10 +81,10 @@ $$ I = \int_0^1 \frac 1 {1+x^4} dx + \int_1^\infty \frac 1 {1+x^4} dx = I_1 + I_
     
     <item>
       <title>Unbiasedness and Consistency of the Regression Coefficients</title>
-      <link>/post/2018-08-16-regression-coefficients/</link>
+      <link>https://evgeniovcharov.github.io/post/2018-08-16-regression-coefficients/</link>
       <pubDate>Thu, 16 Aug 2018 00:00:00 +0000</pubDate>
       
-      <guid>/post/2018-08-16-regression-coefficients/</guid>
+      <guid>https://evgeniovcharov.github.io/post/2018-08-16-regression-coefficients/</guid>
       <description>Here we consider the basic asymptotic properties of the coefficient estimators in a simple linear regression. Many readers when first acquainted with the subject stay under the expression that this is a rather tedious and technical matter. In what follows, we would like to show that when approached from the right perspective, the subject becomes rather intuitive and clear.
 Derivation of the estimators We consider a simple linear regression model
 $$ Y = \beta_0 + \beta_1 X + \epsilon, $$
@@ -83,10 +93,10 @@ where $X$ and $Y$ are random variables, $\beta_0$, $\beta_1$ are constants and $
     
     <item>
       <title>Are two random vectors independent if their components are pairwise independent?</title>
-      <link>/post/2018-07-20-vector-independence/</link>
+      <link>https://evgeniovcharov.github.io/post/2018-07-20-vector-independence/</link>
       <pubDate>Fri, 20 Jul 2018 23:52:33 +0300</pubDate>
       
-      <guid>/post/2018-07-20-vector-independence/</guid>
+      <guid>https://evgeniovcharov.github.io/post/2018-07-20-vector-independence/</guid>
       <description>Let $X=(X_1, X_2)$ and $Y=(Y_1, Y_2)$ be two random vectors in $\operatorname{R}^2$. Suppose that $X_i$ and $Y_j$ are independent for each pair of indices. We have the following questions.
  Are $X$ and $Y$ independent? Are $X$ and $Y$ independent if each of them is bivariately normally distributed? Are $X$ and $Y$ independent if they are jointly normally distributed?  Answer Let $X_1, X_2 \in U(0,1)$ be uniformly distributed and independent. Define the variables
 $$ \begin{aligned} Y_1 &amp;amp;= X_1 + X_2 \qquad \operatorname{mod} 1 \\ Y_2 &amp;amp;= X_1 - X_2 \qquad \operatorname{mod} 1, \end{aligned} $$
@@ -95,24 +105,14 @@ where the $\operatorname{mod} 1$ operation means that we identify all integer va
     
     <item>
       <title>Solving Recurrence Relations with Generating Functions</title>
-      <link>/post/2017-08-09-generating-functions/</link>
+      <link>https://evgeniovcharov.github.io/post/2017-08-09-generating-functions/</link>
       <pubDate>Wed, 09 Aug 2017 00:00:00 +0000</pubDate>
       
-      <guid>/post/2017-08-09-generating-functions/</guid>
+      <guid>https://evgeniovcharov.github.io/post/2017-08-09-generating-functions/</guid>
       <description>&amp;ldquo;A generating function is a device somewhat similar to a bag. Instead of carrying many little objects detachedly, which could be embarrassing, we put them all in a bag, and then we have only one object to carry, the bag.&amp;rdquo; &amp;ndash; George Polya, Mathematics and plausible reasoning (1954)
 Introduction Often in mathematics we have to deal with recurrence relations. One of the best known examples of recurrence relations is the Fibonacci numbers given by the relation
 $$ {\displaystyle F_{n}=F_{n-1}+F_{n-2}}, $$
 with initial conditions ${\displaystyle F_{0}=1}, {\displaystyle F_{1}=1.}$ The Fibonacci sequence appeared in 1202 in the book *Liber Abaci* by the Italian mathematician Leonardo of Pisa, also known today as Fibonacci, where he tries to model the population growth of an idealized pair of newborn rabbits.</description>
-    </item>
-    
-    <item>
-      <title>The Open Dota API</title>
-      <link>/post/open_dota_api/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/post/open_dota_api/</guid>
-      <description>In this tutorial, we are going to show how one can gather data about the esports game Dota 2 from a dedicated site collecting and providing such data. The data will be requested through the web site&amp;rsquo;s API interface documented here: The Open Dota API Documentation. First, we&amp;rsquo;re going to cover the basics of accessing an API using the R programming language.
-APIs allow programmers to request data directly from certain websites through what&amp;rsquo;s called an Application Programming Interface. When a website sets up an API, they are essentially setting up a computer that waits for data requests. Once this computer receives a data request, it will do its own processing of the data and send it to the computer that requested it.</description>
     </item>
     
   </channel>
