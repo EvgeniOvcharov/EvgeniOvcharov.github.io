@@ -97,7 +97,7 @@ APIs allow programmers to request data directly from certain websites through wh
         <a href="https://evgeniovcharov.github.io/post/2021-07-27-open_dota_api/">Making requests to the Open Dota API in R</a>
     </h2>
     <div class="post-item post-meta">
-        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2021-07-26</span><span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;1292 words</span><span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/programming-in-r">Programming in R</a>&nbsp;</span>
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2021-07-26</span><span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;1473 words</span><span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/programming-in-r">Programming in R</a>&nbsp;</span>
 
     </div>
     
@@ -130,7 +130,7 @@ library(jsonlite)
 <pre><code class="language-r">pro_matches = fromJSON(rawToChar(pro_matches_raw$content))
 pro_matches %&gt;% head %&gt;% kbl %&gt;% kable_paper() %&gt;% scroll_box(width = &quot;100%&quot;, height = &quot;250px&quot;)
 </code></pre>
-<table class=" lightable-paper" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; overflow-y: scroll; height:250px; overflow-x: scroll; width:100%; '>
+<table class=" lightable-paper" style='font-family: "Arial Narrow", arial, helvetica, sans-serif;  '>
  <thead>
   <tr>
    <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> match_id </th>
@@ -295,7 +295,42 @@ m = fromJSON(match_json)
 ## [43] &quot;my_word_counts&quot;          &quot;comeback&quot;                &quot;stomp&quot;                  
 ## [46] &quot;replay_url&quot;
 </code></pre>
-<p>The list elements <code>radiant_gold_adv1</code> and <code>radiant_xp_adv</code> are time series values giving as the difference in gold and experience between the two teams each minute of the game.</p>
+<p>The game can be summarized by the following statistics:</p>
+<pre><code class="language-r">library(data.table)
+data.table(date = as.Date.POSIXct(m$start_time, origin = &quot;1970-01-01&quot;),
+           league = m$league$name,
+           radiant = m$radiant_team$name,
+           dire = m$dire_team$name,
+           radiant_score = m$radiant_score,
+           dire_score = m$dire_score,
+           radiant_win =m$radiant_win
+)  %&gt;% kbl %&gt;% kable_paper
+</code></pre>
+<table class=" lightable-paper" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; margin-left: auto; margin-right: auto;'>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> date </th>
+   <th style="text-align:left;"> league </th>
+   <th style="text-align:left;"> radiant </th>
+   <th style="text-align:left;"> dire </th>
+   <th style="text-align:right;"> radiant_score </th>
+   <th style="text-align:right;"> dire_score </th>
+   <th style="text-align:left;"> radiant_win </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> 2021-07-26 </td>
+   <td style="text-align:left;"> Ultras Dota Pro </td>
+   <td style="text-align:left;"> Team GL </td>
+   <td style="text-align:left;"> EYE gaming </td>
+   <td style="text-align:right;"> 15 </td>
+   <td style="text-align:right;"> 34 </td>
+   <td style="text-align:left;"> FALSE </td>
+  </tr>
+</tbody>
+</table>
+<p>A more dynamic representation of the match can be gleaned from the list elements <code>radiant_gold_adv1</code> and <code>radiant_xp_adv</code>. These are time series values giving as the difference in gold and experience between the two teams each minute of the game.</p>
 <pre><code class="language-r">library(data.table)
 d = data.table(minute = 1:length(m$radiant_gold_adv),  gold = m$radiant_gold_adv, xp = m$radiant_xp_adv)
 d = melt(d, id.vars = 'minute')
@@ -353,6 +388,105 @@ ggplot2::qplot(minute, value, data = d, color = variable, geom = c('point', 'lin
 ## [133] &quot;rank_tier&quot;                 &quot;cosmetics&quot;                 &quot;benchmarks&quot;               
 ## [136] &quot;purchase_ward_sentry&quot;      &quot;purchase_tpscroll&quot;
 </code></pre>
+<p>Her are some performance measures of the individual players.</p>
+<pre><code class="language-r">l = m$players
+performance = data.table(account_id = l$account_id, rank_tier = l$rank_tier, kills = l$kills, deaths = l$deaths, damage = rowSums(l$damage, na.rm = T), total_gold = l$total_gold)
+performance %&gt;% kbl %&gt;% kable_paper %&gt;% scroll_box(width = &quot;100%&quot;, height = &quot;250px&quot;)
+</code></pre>
+<table class=" lightable-paper" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; margin-left: auto; margin-right: auto; '>
+ <thead>
+  <tr>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> account_id </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> rank_tier </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> kills </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> deaths </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> damage </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> total_gold </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 1139215778 </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 43215 </td>
+   <td style="text-align:right;"> 7113 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 173851224 </td>
+   <td style="text-align:right;"> 80 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 8 </td>
+   <td style="text-align:right;"> 34597 </td>
+   <td style="text-align:right;"> 4089 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 364568110 </td>
+   <td style="text-align:right;"> 51 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 7 </td>
+   <td style="text-align:right;"> 16948 </td>
+   <td style="text-align:right;"> 3566 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 250358373 </td>
+   <td style="text-align:right;"> 80 </td>
+   <td style="text-align:right;"> 7 </td>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:right;"> 58852 </td>
+   <td style="text-align:right;"> 8102 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 329706313 </td>
+   <td style="text-align:right;"> 65 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 76585 </td>
+   <td style="text-align:right;"> 7501 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1029972951 </td>
+   <td style="text-align:right;"> 80 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 44329 </td>
+   <td style="text-align:right;"> 7985 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 160725934 </td>
+   <td style="text-align:right;"> 80 </td>
+   <td style="text-align:right;"> 7 </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 11683 </td>
+   <td style="text-align:right;"> 7229 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 119942696 </td>
+   <td style="text-align:right;"> 80 </td>
+   <td style="text-align:right;"> 14 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 99440 </td>
+   <td style="text-align:right;"> 14440 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 299806942 </td>
+   <td style="text-align:right;"> 80 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 53823 </td>
+   <td style="text-align:right;"> 8199 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 130433320 </td>
+   <td style="text-align:right;"> 80 </td>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 60769 </td>
+   <td style="text-align:right;"> 10970 </td>
+  </tr>
+</tbody>
+</table>
 <p>These are some basics of the Open Dota API. For more information read the <a href="https://docs.opendota.com/#" target="_blank">documentation</a> or visit <a href="https://www.dotabuff.com/" target="_blank">the dotabuff site</a>.</p>
 
     </div>
